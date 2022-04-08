@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
 import dotenv from "dotenv";
 
-// The .env file will actually be present in the parent repo
-dotenv.config({ path: "../.env" });
+// The .env file will actually be present in the repo base folder
+dotenv.config({ path: "../../.env" });
 
 export const PORT = 3000;
 

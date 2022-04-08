@@ -1,8 +1,8 @@
 {
-  "name": "shopify-app-node",
+  "name": "starter-react-frontend-app",
   "private": true,
   "scripts": {
-    "build": "vite build --outDir ../dist",
+    "build": "vite build",
     "dev": "cross-env NODE_ENV=development node vite-server.js"
   },
   "type": "module",
