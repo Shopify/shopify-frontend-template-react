@@ -1,6 +1,6 @@
 import express from "express";
 
-import config, { PORT } from "./vite.config.js";
+import config from "./vite.config.js";
 
 async function createServer() {
   const app = express();
@@ -12,4 +12,4 @@ async function createServer() {
   return { app };
 }
 
-createServer().then(({ app }) => app.listen(PORT));
+createServer().then(({ app }) => app.listen(config.server.port));

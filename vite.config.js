@@ -1,11 +1,4 @@
 import { defineConfig } from "vite";
-import dotenv from "dotenv";
-import path from "path"
-
-// The .env file will actually be present in the repo base folder
-dotenv.config({ path: "../../.env" });
-
-export const PORT = 3000;
 
 // prettier-ignore
 const INDEX_ROUTE = "^/(\\?.*)?$";
@@ -27,7 +20,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: PORT,
+    port: process.env.FRONTEND_PORT,
     middlewareMode: "html",
     hmr: {
       protocol: "ws",
@@ -37,13 +30,13 @@ export default defineConfig({
     },
     proxy: {
       [INDEX_ROUTE]: {
-        target: "http://127.0.0.1:8081",
+        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
         changeOrigin: false,
         secure: true,
         ws: false,
       },
       [API_ROUTE]: {
-        target: "http://127.0.0.1:8081",
+        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
         changeOrigin: false,
         secure: true,
         ws: false,

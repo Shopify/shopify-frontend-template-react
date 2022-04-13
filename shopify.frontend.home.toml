@@ -1,0 +1,5 @@
+[environment]
+variables=["BACKEND_PORT", "FRONTEND_PORT", "SHOPIFY_API_KEY"]
+
+[commands]
+dev = "npm run dev"
