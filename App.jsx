@@ -6,7 +6,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
 import { HomePage } from "./components/HomePage";
-import { AuthProvider } from "./utils/auth";
+import { GraphQLProvider } from "./components/providers/GraphQLProvider";
 
 export default function App() {
   return (
@@ -18,9 +18,9 @@ export default function App() {
           forceRedirect: true,
         }}
       >
-        <AuthProvider>
+        <GraphQLProvider>
           <HomePage />
-        </AuthProvider>
+        </GraphQLProvider>
       </AppBridgeProvider>
     </PolarisProvider>
   );
