@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import dotenv from "dotenv";
+import path from "path"
 
 // The .env file will actually be present in the repo base folder
 dotenv.config({ path: "../../.env" });
@@ -17,6 +18,13 @@ export default defineConfig({
   },
   esbuild: {
     jsxInject: `import React from 'react'`,
+  },
+  resolve: {
+    alias: {
+      assets: path.resolve(process.cwd(), "./assets"),
+      components: path.resolve(process.cwd(), "./components"),
+      pages: path.resolve(process.cwd(), "./pages"),
+    },
   },
   server: {
     port: PORT,
