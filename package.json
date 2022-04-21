@@ -10,7 +10,7 @@
     "node": ">= 12.16"
   },
   "dependencies": {
-    "@shopify/app-bridge": "^2.0.19",
+    "@shopify/app-bridge": "^2.0.25",
     "@shopify/app-bridge-react": "^2.0.19",
     "@shopify/app-bridge-utils": "^2.0.19",
     "@shopify/polaris": "^9.2.2",
