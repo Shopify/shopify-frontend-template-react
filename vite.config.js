@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import path from "path";
 
 // prettier-ignore
 const INDEX_ROUTE = "^/(\\?.*)?$";
