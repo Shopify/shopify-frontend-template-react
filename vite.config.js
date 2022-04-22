@@ -5,8 +5,9 @@ import path from "path";
 const INDEX_ROUTE = "^/(\\?.*)?$";
 const API_ROUTE = "^/api/";
 
+const root = new URL(".", import.meta.url).pathname;
 export default defineConfig({
-  root: process.cwd(),
+  root,
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
   },
@@ -15,9 +16,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      assets: path.resolve(process.cwd(), "./assets"),
-      components: path.resolve(process.cwd(), "./components"),
-      pages: path.resolve(process.cwd(), "./pages"),
+      assets: path.resolve(root, "./assets"),
+      components: path.resolve(root, "./components"),
+      pages: path.resolve(root, "./pages"),
     },
   },
   server: {
