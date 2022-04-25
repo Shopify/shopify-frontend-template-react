@@ -4,11 +4,14 @@ import {
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
+import { BrowserRouter } from "react-router-dom";
 import { GraphQLProvider } from "./components/providers/GraphQLProvider";
 
 import Routes from "./Routes";
 
 export default function App() {
+  const pages = import.meta.globEager("./pages/**/*.[jt](s|sx)") }
+
   return (
     <PolarisProvider i18n={translations}>
       <AppBridgeProvider
@@ -19,7 +22,9 @@ export default function App() {
         }}
       >
         <GraphQLProvider>
-          <Routes />
+          <BrowserRouter>
+            <Routes pages={pages} />
+          </BrowserRouter>
         </GraphQLProvider>
       </AppBridgeProvider>
     </PolarisProvider>
