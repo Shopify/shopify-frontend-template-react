@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "build": "vite build",
-    "dev": "cross-env NODE_ENV=development node vite-server.js"
+    "dev": "cross-env NODE_ENV=development node vite-server.js",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "type": "module",
   "engines": {
@@ -27,6 +29,10 @@
     "vite": "^2.8.6"
   },
   "devDependencies": {
-    "prettier": "^2.6.0"
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.2",
+    "jsdom": "^19.0.0",
+    "prettier": "^2.6.0",
+    "vitest": "^0.10.0"
   }
 }
