@@ -19,6 +19,7 @@ export default defineConfig({
       assets: path.resolve(root, "./assets"),
       components: path.resolve(root, "./components"),
       pages: path.resolve(root, "./pages"),
+      test: path.resolve(root, "./test"),
     },
   },
   server: {
