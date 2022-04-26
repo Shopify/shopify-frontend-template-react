@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, useParams } from "react-router-dom";
 import Routes from "./Routes";
 import { createMemoryHistory } from "history";
 
@@ -10,10 +10,16 @@ describe.concurrent("Routes", () => {
       default: () => <>index.jsx</>,
     },
     "./pages/blog/[id].jsx": {
-      default: () => <>blog/[id].jsx</>,
+      default: () => {
+        const { id } = useParams();
+        return <>{`blog/${id}.jsx`}</>;
+      },
     },
     "./pages/[...catchAll].jsx": {
-      default: () => <>./pages/[...catchAll].jsx</>,
+      default: () => {
+        const {catchAll} = useParams();
+        return <>{`./pages/${catchAll}.jsx`}</>;
+      },
     },
     "./pages/LoremIpsum.jsx": {
       default: () => <>./pages/LoremIpsum.jsx</>,
@@ -37,7 +43,7 @@ describe.concurrent("Routes", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("blog/[id].jsx")).toBeInTheDocument();
+    expect(screen.getByText("blog/123.jsx")).toBeInTheDocument();
   });
 
   it("renders catch all routes using [...variable]", async () => {
@@ -47,7 +53,7 @@ describe.concurrent("Routes", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("./pages/[...catchAll].jsx")).toBeInTheDocument();
+    expect(screen.getByText("./pages/abc.jsx")).toBeInTheDocument();
   });
 
   it("normalizes routes to lowercase", async () => {
