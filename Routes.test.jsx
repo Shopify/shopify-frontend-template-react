@@ -4,17 +4,23 @@ import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import Routes from "./Routes";
 import { createMemoryHistory } from "history";
 
-describe.concurrent("suite", () => {
+describe.concurrent("Routes", () => {
   const pages = {
     "./pages/index.jsx": {
       default: () => <>index.jsx</>,
     },
-    "./pages/blog/:id.jsx": {
-      default: () => <>blog/:id.jsx</>,
+    "./pages/blog/[id].jsx": {
+      default: () => <>blog/[id].jsx</>,
+    },
+    "./pages/[...catchAll].jsx": {
+      default: () => <>./pages/[...catchAll].jsx</>,
+    },
+    "./pages/LoremIpsum.jsx": {
+      default: () => <>./pages/LoremIpsum.jsx</>,
     },
   };
 
-  it("renders the index page", async () => {
+  it("renders index routes", async () => {
     render(
       <MemoryRouter initialEntries={[""]}>
         <Routes pages={pages} />
@@ -24,13 +30,53 @@ describe.concurrent("suite", () => {
     expect(screen.getByText("index.jsx")).toBeInTheDocument();
   });
 
-  it("renders dynamic paths using :variable", async () => {
+  it("renders dynamic routes using [variable]", async () => {
     render(
       <MemoryRouter initialEntries={["/blog/123"]}>
         <Routes pages={pages} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText("blog/:id.jsx")).toBeInTheDocument();
+    expect(screen.getByText("blog/[id].jsx")).toBeInTheDocument();
+  });
+
+  it("renders catch all routes using [...variable]", async () => {
+    render(
+      <MemoryRouter initialEntries={["/abc"]}>
+        <Routes pages={pages} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("./pages/[...catchAll].jsx")).toBeInTheDocument();
+  });
+
+  it("normalizes routes to lowercase", async () => {
+    render(
+      <MemoryRouter initialEntries={["/loremipsum"]}>
+        <Routes pages={pages} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("./pages/LoremIpsum.jsx")).toBeInTheDocument();
+  });
+
+  it("warns when a page has no default export", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    const pages = {
+      "./home.jsx": {
+        Comments: () => <>comments.jsx</>,
+      },
+    };
+
+    render(
+      <MemoryRouter>
+        <Routes pages={pages} />
+      </MemoryRouter>
+    );
+
+    expect(console.warn).toHaveBeenCalledWith(
+      "./home.jsx doesn't export a default React component"
+    );
   });
 });
