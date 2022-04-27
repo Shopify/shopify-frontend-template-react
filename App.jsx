@@ -1,6 +1,5 @@
-import {
-  Provider as AppBridgeProvider,
-} from "@shopify/app-bridge-react";
+import { BrowserRouter } from "react-router-dom";
+import { Provider as AppBridgeProvider } from "@shopify/app-bridge-react";
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
@@ -19,7 +18,9 @@ export default function App() {
         }}
       >
         <GraphQLProvider>
-          <Routes />
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
         </GraphQLProvider>
       </AppBridgeProvider>
     </PolarisProvider>

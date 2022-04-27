@@ -1,20 +1,19 @@
-import { BrowserRouter, Routes as ReactRouterRoutes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes as ReactRouterRoutes,
+  Route,
+} from "react-router-dom";
 
-export default function Routes() {
-  const routes = useRoutes();
+export default function Routes({ pages }) {
+  const routes = useRoutes(pages);
   const routeComponents = routes.map(({ path, component: Component }) => (
     <Route key={path} path={path} element={<Component />} />
   ));
 
-  return (
-    <BrowserRouter>
-      <ReactRouterRoutes>{routeComponents}</ReactRouterRoutes>
-    </BrowserRouter>
-  );
-};
+  return <ReactRouterRoutes>{routeComponents}</ReactRouterRoutes>;
+}
 
-function useRoutes() {
-  const pages = import.meta.globEager("./pages/**/*.[jt](s|sx)");
+function useRoutes(pages) {
   const routes = Object.keys(pages)
     .map((key) => {
       let path = key
@@ -49,5 +48,5 @@ function useRoutes() {
     })
     .filter((route) => route.component);
 
-   return routes
+  return routes;
 }
