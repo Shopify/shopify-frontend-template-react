@@ -19,6 +19,7 @@ export default defineConfig({
       assets: path.resolve(root, "./assets"),
       components: path.resolve(root, "./components"),
       pages: path.resolve(root, "./pages"),
+      test: path.resolve(root, "./test"),
     },
   },
   server: {
@@ -43,6 +44,14 @@ export default defineConfig({
         secure: true,
         ws: false,
       },
+    },
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./test/setup.js",
+    deps: {
+      inline: ["@shopify/react-testing"],
     },
   },
 });
