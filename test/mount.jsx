@@ -3,6 +3,8 @@ import { createMount } from "@shopify/react-testing";
 import { PolarisTestProvider } from "@shopify/polaris";
 import { AppBridgeContext } from "@shopify/app-bridge-react/context";
 import { GraphQLProvider } from "components/providers/GraphQLProvider";
+import { BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 function createMockApp() {
   const localOrigin = "https://example.com";
@@ -19,12 +21,25 @@ function createMockApp() {
 }
 
 export const mount = createMount({
-  render(element) {
+  context({ initialPath }) {
+    const history = createBrowserHistory();
+
+    if (initialPath) {
+      history.push(initialPath);
+    }
+
+    return {
+      history
+    }
+  },
+  render(element, {history}) {
     return (
       <PolarisTestProvider>
-        <AppBridgeContext.Provider value={createMockApp()}>
-          <GraphQLProvider>{element}</GraphQLProvider>
-        </AppBridgeContext.Provider>
+        <BrowserRouter>
+          <AppBridgeContext.Provider value={createMockApp()}>
+            <GraphQLProvider>{element}</GraphQLProvider>
+          </AppBridgeContext.Provider>
+        </BrowserRouter>
       </PolarisTestProvider>
     );
   },
