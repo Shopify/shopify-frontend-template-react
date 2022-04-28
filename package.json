@@ -3,6 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "build:app": "vite build --outDir ../dist --emptyOutDir",
     "build": "vite build",
     "dev": "cross-env NODE_ENV=development node vite-server.js"
   },
