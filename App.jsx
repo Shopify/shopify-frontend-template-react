@@ -1,30 +1,26 @@
-import { BrowserRouter } from "react-router-dom";
-import { Provider as AppBridgeProvider } from "@shopify/app-bridge-react";
-import { AppProvider as PolarisProvider } from "@shopify/polaris";
-import translations from "@shopify/polaris/locales/en.json";
-import "@shopify/polaris/build/esm/styles.css";
-import { GraphQLProvider } from "./components/providers/GraphQLProvider";
+import { BrowserRouter } from 'react-router-dom'
+import { AppProvider as PolarisProvider } from '@shopify/polaris'
+import translations from '@shopify/polaris/locales/en.json'
+import '@shopify/polaris/build/esm/styles.css'
 
-import Routes from "./Routes";
+import { TitleBarSection } from './components/TitleBarSection'
+import { AppBridgeProvider } from './components/providers/AppBridgeProvider'
+import { GraphQLProvider } from './components/providers/GraphQLProvider'
+import Routes from './Routes'
 
 export default function App() {
   const pages = import.meta.globEager("./pages/**/*.[jt](s|sx)");
 
   return (
     <PolarisProvider i18n={translations}>
-      <AppBridgeProvider
-        config={{
-          apiKey: process.env.SHOPIFY_API_KEY,
-          host: new URL(location).searchParams.get("host"),
-          forceRedirect: true,
-        }}
-      >
-        <GraphQLProvider>
-          <BrowserRouter>
+      <BrowserRouter>
+        <AppBridgeProvider>
+          <GraphQLProvider>
+            <TitleBarSection />
             <Routes pages={pages} />
-          </BrowserRouter>
-        </GraphQLProvider>
-      </AppBridgeProvider>
+          </GraphQLProvider>
+        </AppBridgeProvider>
+      </BrowserRouter>
     </PolarisProvider>
-  );
+  )
 }
