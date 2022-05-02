@@ -2,7 +2,7 @@ import { vi } from "vitest";
 import { useParams } from "react-router-dom";
 import { mount } from "test/mount";
 
-import Routes from "./Routes";
+import { Routes } from "./Routes";
 
 const Index = () => null;
 const CamelCase = () => null;
