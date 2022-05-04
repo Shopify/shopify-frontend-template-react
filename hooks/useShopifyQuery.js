@@ -3,7 +3,7 @@ import { GraphQLClient } from "graphql-request";
 
 import { useAuthenticatedFetch } from "./useAuthenticatedFetch.js";
 
-export const useShopifyQuery = (key, query, variables) => {
+export const useShopifyQuery = ({ key, query, variables }) => {
   const authenticatedFetch = useAuthenticatedFetch();
   const graphQLClient = new GraphQLClient("/api/graphql", {
     fetch: authenticatedFetch,
