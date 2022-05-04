@@ -8,10 +8,10 @@ import {
   Button,
 } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
-import { gql } from 'graphql-request';
+import { gql } from "graphql-request";
 
-import { useShopifyMutation } from '../hooks/useShopifyMutation';
-import { useAuthenticatedFetch } from '../hooks/useAuthenticatedFetch';
+import { useShopifyMutation } from "../hooks/useShopifyMutation";
+import { useAuthenticatedFetch } from "../hooks/useAuthenticatedFetch";
 
 const PRODUCTS_QUERY = gql`
   mutation populateProduct($input: ProductInput!) {
@@ -26,7 +26,9 @@ const PRODUCTS_QUERY = gql`
 export function ProductsCard() {
   const fetch = useAuthenticatedFetch();
 
-  const [populateProduct, {isLoading}] = useShopifyMutation(PRODUCTS_QUERY)
+  const [populateProduct, { isLoading }] = useShopifyMutation({
+    query: PRODUCTS_QUERY,
+  });
   const [productCount, setProductCount] = useState(0);
   const [hasResults, setHasResults] = useState(false);
 
@@ -78,11 +80,7 @@ export function ProductsCard() {
               <TextStyle variation="strong">{productCount}</TextStyle>
             </DisplayText>
           </Heading>
-          <Button
-            primary
-            loading={isLoading}
-            onClick={handlePopulate}
-          >
+          <Button primary loading={isLoading} onClick={handlePopulate}>
             Populate 5 products
           </Button>
         </TextContainer>
@@ -92,10 +90,10 @@ export function ProductsCard() {
 }
 
 function randomTitle() {
-  const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)]
-  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)]
+  const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
 
-  return `${adjective} ${noun}`
+  return `${adjective} ${noun}`;
 }
 
 const ADJECTIVES = [
