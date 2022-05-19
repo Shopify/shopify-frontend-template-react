@@ -10,8 +10,7 @@ import {
 import { Toast } from '@shopify/app-bridge-react'
 import { gql } from 'graphql-request'
 
-import { useShopifyMutation } from '../hooks/useShopifyMutation'
-import { useAuthenticatedFetch } from '../hooks/useAuthenticatedFetch'
+import { useAuthenticatedFetch, useShopifyMutation } from 'hooks'
 
 const PRODUCTS_QUERY = gql`
   mutation populateProduct($input: ProductInput!) {
