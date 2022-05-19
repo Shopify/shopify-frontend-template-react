@@ -3,6 +3,21 @@ import {
   Route,
 } from "react-router-dom";
 
+
+/**
+ * File-based routing.
+ * @desc Simple filebased routing that users react router under the hood.
+ * To create a new route create a new .jsx file in `/pages` with a default export.
+ *
+ * Some examples:
+ * * `/pages/index.jsx` matches `/`
+ * * `/pages/blog/[id].jsx` matches `/blog/123`
+ * * `/pages/[..catchAll].jsx` matches any URL not explictly matched
+ *
+ * @param {object} pages value of import.meta.globEager(). See https://vitejs.dev/guide/features.html#glob-import
+ *
+ * @return {Routes} `<Routes/>` from React Router, with a `<Route/>` for each file in `pages`
+ */
 export default function Routes({ pages }) {
   const routes = useRoutes(pages);
   const routeComponents = routes.map(({ path, component: Component }) => (
