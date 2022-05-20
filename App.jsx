@@ -3,9 +3,8 @@ import { AppProvider as PolarisProvider } from '@shopify/polaris'
 import translations from '@shopify/polaris/locales/en.json'
 import '@shopify/polaris/build/esm/styles.css'
 
-import { TitleBarSection } from './components/TitleBarSection'
-import { AppBridgeProvider } from './components/providers/AppBridgeProvider'
-import { GraphQLProvider } from './components/providers/GraphQLProvider'
+import { AppBridgeProvider, GraphQLProvider, TitleBarSection } from 'components'
+
 import Routes from './Routes'
 
 export default function App() {
