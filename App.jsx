@@ -3,7 +3,8 @@ import { AppProvider as PolarisProvider } from '@shopify/polaris'
 import translations from '@shopify/polaris/locales/en.json'
 import '@shopify/polaris/build/esm/styles.css'
 
-import { AppBridgeProvider, GraphQLProvider, TitleBarSection } from 'components'
+import { AppBridgeProvider, GraphQLProvider } from 'components'
+import { NavigationMenu } from '@shopify/app-bridge-react'
 
 import Routes from './Routes'
 
@@ -19,7 +20,18 @@ export default function App() {
       <BrowserRouter>
         <AppBridgeProvider>
           <GraphQLProvider>
-            <TitleBarSection />
+            <NavigationMenu
+              navigationLinks={[
+                {
+                  label: 'Tab 1',
+                  destination: '/',
+                },
+                {
+                  label: 'Tab 2',
+                  destination: '/tab2',
+                },
+              ]}
+            />
             <Routes pages={pages} />
           </GraphQLProvider>
         </AppBridgeProvider>
