@@ -3,8 +3,7 @@ import { AppProvider as PolarisProvider } from '@shopify/polaris'
 import translations from '@shopify/polaris/locales/en.json'
 import '@shopify/polaris/build/esm/styles.css'
 
-import { AppBridgeProvider, GraphQLProvider } from 'components'
-import { NavigationMenu } from '@shopify/app-bridge-react'
+import { AppBridgeProvider, GraphQLProvider, NavigationMenu } from 'components'
 
 import Routes from './Routes'
 
@@ -13,25 +12,14 @@ export default function App() {
   // .test.tsx or .test.jsx will be ignored
   // [id] can be used to match dynamic paths, e.g: /blog/[id].jsx
   // [..catchAll] will match all routes that don't match any files in /pages
-  const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
+  const pages = import.meta.globEager('./pages/**/!(*.test.[jt]sx)*.([jt]sx)')
 
   return (
     <PolarisProvider i18n={translations}>
       <BrowserRouter>
         <AppBridgeProvider>
           <GraphQLProvider>
-            <NavigationMenu
-              navigationLinks={[
-                {
-                  label: 'Tab 1',
-                  destination: '/',
-                },
-                {
-                  label: 'Tab 2',
-                  destination: '/tab2',
-                },
-              ]}
-            />
+            <NavigationMenu />
             <Routes pages={pages} />
           </GraphQLProvider>
         </AppBridgeProvider>
