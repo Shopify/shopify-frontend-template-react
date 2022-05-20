@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 import {
   Card,
   Heading,
@@ -6,49 +6,49 @@ import {
   DisplayText,
   TextStyle,
   Button,
-} from "@shopify/polaris";
-import { Toast } from "@shopify/app-bridge-react";
-import { gql } from "graphql-request";
+} from '@shopify/polaris'
+import { Toast } from '@shopify/app-bridge-react'
+import { gql } from 'graphql-request'
 
-import { useShopifyMutation } from "../hooks/useShopifyMutation";
-import { useAuthenticatedFetch } from "../hooks/useAuthenticatedFetch";
+import { useShopifyMutation } from '../hooks/useShopifyMutation'
+import { useAuthenticatedFetch } from '../hooks/useAuthenticatedFetch'
 
 const PRODUCTS_QUERY = gql`
   mutation populateProduct($input: ProductInput!) {
     productCreate(input: $input) {
       product {
-        title
+        id
       }
     }
   }
-`;
+`
 
 export function ProductsCard() {
-  const fetch = useAuthenticatedFetch();
+  const fetch = useAuthenticatedFetch()
 
   const [populateProduct, { isLoading }] = useShopifyMutation({
     query: PRODUCTS_QUERY,
-  });
-  const [productCount, setProductCount] = useState(0);
-  const [hasResults, setHasResults] = useState(false);
+  })
+  const [productCount, setProductCount] = useState(0)
+  const [hasResults, setHasResults] = useState(false)
 
   async function updateProductCount() {
-    const { count } = await fetch("/api/products-count").then((res) =>
+    const { count } = await fetch('/api/products-count').then((res) =>
       res.json()
-    );
-    setProductCount(count);
+    )
+    setProductCount(count)
   }
 
   useEffect(() => {
-    updateProductCount();
-  }, []);
+    updateProductCount()
+  }, [])
 
   const toastMarkup = hasResults && (
     <Toast
       content="5 products created!"
       onDismiss={() => setHasResults(false)}
     />
-  );
+  )
 
   const handlePopulate = () => {
     Promise.all(
@@ -56,14 +56,15 @@ export function ProductsCard() {
         populateProduct({
           input: {
             title: randomTitle(),
+            variants: [{ price: randomPrice() }],
           },
         })
       )
     ).then(() => {
-      updateProductCount();
-      setHasResults(true);
-    });
-  };
+      updateProductCount()
+      setHasResults(true)
+    })
+  }
 
   return (
     <>
@@ -86,146 +87,150 @@ export function ProductsCard() {
         </TextContainer>
       </Card>
     </>
-  );
+  )
 }
 
 function randomTitle() {
-  const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+  const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)]
+  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)]
 
-  return `${adjective} ${noun}`;
+  return `${adjective} ${noun}`
+}
+
+function randomPrice() {
+  return Math.round((Math.random() * 10 + Number.EPSILON) * 100) / 100
 }
 
 const ADJECTIVES = [
-  "autumn",
-  "hidden",
-  "bitter",
-  "misty",
-  "silent",
-  "empty",
-  "dry",
-  "dark",
-  "summer",
-  "icy",
-  "delicate",
-  "quiet",
-  "white",
-  "cool",
-  "spring",
-  "winter",
-  "patient",
-  "twilight",
-  "dawn",
-  "crimson",
-  "wispy",
-  "weathered",
-  "blue",
-  "billowing",
-  "broken",
-  "cold",
-  "damp",
-  "falling",
-  "frosty",
-  "green",
-  "long",
-  "late",
-  "lingering",
-  "bold",
-  "little",
-  "morning",
-  "muddy",
-  "old",
-  "red",
-  "rough",
-  "still",
-  "small",
-  "sparkling",
-  "throbbing",
-  "shy",
-  "wandering",
-  "withered",
-  "wild",
-  "black",
-  "young",
-  "holy",
-  "solitary",
-  "fragrant",
-  "aged",
-  "snowy",
-  "proud",
-  "floral",
-  "restless",
-  "divine",
-  "polished",
-  "ancient",
-  "purple",
-  "lively",
-  "nameless",
-];
+  'autumn',
+  'hidden',
+  'bitter',
+  'misty',
+  'silent',
+  'empty',
+  'dry',
+  'dark',
+  'summer',
+  'icy',
+  'delicate',
+  'quiet',
+  'white',
+  'cool',
+  'spring',
+  'winter',
+  'patient',
+  'twilight',
+  'dawn',
+  'crimson',
+  'wispy',
+  'weathered',
+  'blue',
+  'billowing',
+  'broken',
+  'cold',
+  'damp',
+  'falling',
+  'frosty',
+  'green',
+  'long',
+  'late',
+  'lingering',
+  'bold',
+  'little',
+  'morning',
+  'muddy',
+  'old',
+  'red',
+  'rough',
+  'still',
+  'small',
+  'sparkling',
+  'throbbing',
+  'shy',
+  'wandering',
+  'withered',
+  'wild',
+  'black',
+  'young',
+  'holy',
+  'solitary',
+  'fragrant',
+  'aged',
+  'snowy',
+  'proud',
+  'floral',
+  'restless',
+  'divine',
+  'polished',
+  'ancient',
+  'purple',
+  'lively',
+  'nameless',
+]
 
 const NOUNS = [
-  "waterfall",
-  "river",
-  "breeze",
-  "moon",
-  "rain",
-  "wind",
-  "sea",
-  "morning",
-  "snow",
-  "lake",
-  "sunset",
-  "pine",
-  "shadow",
-  "leaf",
-  "dawn",
-  "glitter",
-  "forest",
-  "hill",
-  "cloud",
-  "meadow",
-  "sun",
-  "glade",
-  "bird",
-  "brook",
-  "butterfly",
-  "bush",
-  "dew",
-  "dust",
-  "field",
-  "fire",
-  "flower",
-  "firefly",
-  "feather",
-  "grass",
-  "haze",
-  "mountain",
-  "night",
-  "pond",
-  "darkness",
-  "snowflake",
-  "silence",
-  "sound",
-  "sky",
-  "shape",
-  "surf",
-  "thunder",
-  "violet",
-  "water",
-  "wildflower",
-  "wave",
-  "water",
-  "resonance",
-  "sun",
-  "wood",
-  "dream",
-  "cherry",
-  "tree",
-  "fog",
-  "frost",
-  "voice",
-  "paper",
-  "frog",
-  "smoke",
-  "star",
-];
+  'waterfall',
+  'river',
+  'breeze',
+  'moon',
+  'rain',
+  'wind',
+  'sea',
+  'morning',
+  'snow',
+  'lake',
+  'sunset',
+  'pine',
+  'shadow',
+  'leaf',
+  'dawn',
+  'glitter',
+  'forest',
+  'hill',
+  'cloud',
+  'meadow',
+  'sun',
+  'glade',
+  'bird',
+  'brook',
+  'butterfly',
+  'bush',
+  'dew',
+  'dust',
+  'field',
+  'fire',
+  'flower',
+  'firefly',
+  'feather',
+  'grass',
+  'haze',
+  'mountain',
+  'night',
+  'pond',
+  'darkness',
+  'snowflake',
+  'silence',
+  'sound',
+  'sky',
+  'shape',
+  'surf',
+  'thunder',
+  'violet',
+  'water',
+  'wildflower',
+  'wave',
+  'water',
+  'resonance',
+  'sun',
+  'wood',
+  'dream',
+  'cherry',
+  'tree',
+  'fog',
+  'frost',
+  'voice',
+  'paper',
+  'frog',
+  'smoke',
+  'star',
+]
