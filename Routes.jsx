@@ -9,7 +9,12 @@ export default function Routes({ pages }) {
     <Route key={path} path={path} element={<Component />} />
   ))
 
-  return <ReactRouterRoutes>{routeComponents}</ReactRouterRoutes>
+  return (
+    <ReactRouterRoutes>
+      {routeComponents}
+      <Route path="*" element={<NotFound />} />
+    </ReactRouterRoutes>
+  )
 }
 
 function useRoutes(pages) {
