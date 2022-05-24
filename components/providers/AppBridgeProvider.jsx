@@ -4,11 +4,11 @@ import { Provider } from '@shopify/app-bridge-react'
 
 
 /**
- * A component to configure AppBridge.
- * @desc A thin wrapper around AppBridgeProvider. It:
+ * A component to configure App Bridge.
+ * @desc A thin wrapper around AppBridgeProvider that provides the following capabilities:
  *
- * 1. Ensures that navigating inside the App updates the Host URL.
- * 2. Configures the AppBridge Provider, which unlocks functionality provided by the host.
+ * 1. Ensures that navigating inside the app updates the host URL.
+ * 2. Configures the App Bridge Provider, which unlocks functionality provided by the host.
  *
  * See: https://shopify.dev/apps/tools/app-bridge/react-components
  */
