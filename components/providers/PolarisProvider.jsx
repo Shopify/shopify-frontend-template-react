@@ -10,7 +10,9 @@ function AppBridgeLink({ url, children, className, external, ...rest }) {
     navigate(url)
   }, [url])
 
-  if (external) {
+  const IS_EXTERNAL_LINK_REGEX = /^(?:[a-z][a-z\d+.-]*:|\/\/)/;
+
+  if (external || IS_EXTERNAL_LINK_REGEX.test(url)) {
     return (
       <a target="_blank" rel="noopener noreferrer" href={url} {...rest}>
         {children}
