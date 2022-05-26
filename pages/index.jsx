@@ -15,7 +15,7 @@ import { ProductsCard } from "components/ProductsCard";
 
 export default function HomePage() {
   return (
-    <Page fullWidth>
+    <Page>
       <Layout>
         <Layout.Section>
           <Card sectioned>

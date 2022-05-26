@@ -2,7 +2,7 @@ import { Card, Page, Layout, TextContainer, Heading } from '@shopify/polaris'
 
 export default function Tab2() {
   return (
-    <Page fullWidth>
+    <Page>
       <Layout>
         <Layout.Section>
           <Card sectioned>
