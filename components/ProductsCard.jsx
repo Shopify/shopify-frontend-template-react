@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   Card,
   Heading,
@@ -24,6 +24,7 @@ const PRODUCTS_QUERY = gql`
 
 export function ProductsCard() {
   const fetch = useAuthenticatedFetch()
+  const mounted = useRef(false)
 
   const [populateProduct, { isLoading }] = useShopifyMutation({
     query: PRODUCTS_QUERY,
@@ -32,15 +33,22 @@ export function ProductsCard() {
   const [hasResults, setHasResults] = useState(false)
 
   async function updateProductCount() {
-    const { count } = await fetch('/api/products-count').then((res) =>
-      res.json()
-    )
-    setProductCount(count)
+    const response = await fetch('/api/products-count')
+    const { count } = await response.json()
+    return count
   }
 
   useEffect(() => {
-    updateProductCount()
-  }, [])
+    mounted.current = true
+
+    updateProductCount().then(count => {
+      if (mounted.current) setProductCount(count)
+    })
+
+    return () => {
+      mounted.current = false
+    }
+  }, [mounted.current])
 
   const toastMarkup = hasResults && (
     <Toast
@@ -60,8 +68,10 @@ export function ProductsCard() {
         })
       )
     ).then(() => {
-      updateProductCount()
-      setHasResults(true)
+      if (mounted.current) {
+        updateProductCount()
+        setHasResults(true)
+      }
     })
   }
 
