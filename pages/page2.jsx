@@ -1,6 +1,6 @@
 import { Card, Page, Layout, TextContainer, Heading } from '@shopify/polaris'
 
-export default function Tab2() {
+export default function Page2() {
   return (
     <Page>
       <Layout>
