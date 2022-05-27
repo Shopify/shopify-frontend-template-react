@@ -29,7 +29,7 @@ export function ProductsCard() {
   const [populateProduct, { isLoading }] = useShopifyMutation({
     query: PRODUCTS_QUERY,
   })
-  const [productCount, setProductCount] = useState(0)
+  const [productCount, setProductCount] = useState('-')
   const [hasResults, setHasResults] = useState(false)
 
   async function updateProductCount() {
