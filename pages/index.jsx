@@ -15,7 +15,7 @@ import { ProductsCard } from "components/ProductsCard";
 
 export default function HomePage() {
   return (
-    <Page>
+    <Page narrowWidth>
       <Layout>
         <Layout.Section>
           <Card sectioned>
@@ -75,7 +75,7 @@ export default function HomePage() {
             </Stack>
           </Card>
         </Layout.Section>
-        <Layout.Section secondary>
+        <Layout.Section>
           <ProductsCard />
         </Layout.Section>
       </Layout>

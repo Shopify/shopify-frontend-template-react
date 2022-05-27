@@ -41,7 +41,7 @@ export function ProductsCard() {
   useEffect(() => {
     mounted.current = true
 
-    updateProductCount().then(count => {
+    updateProductCount().then((count) => {
       if (mounted.current) setProductCount(count)
     })
 
@@ -69,7 +69,9 @@ export function ProductsCard() {
       )
     ).then(() => {
       if (mounted.current) {
-        updateProductCount()
+        updateProductCount().then((count) => {
+          if (mounted.current) setProductCount(count)
+        })
         setHasResults(true)
       }
     })
@@ -78,7 +80,15 @@ export function ProductsCard() {
   return (
     <>
       {toastMarkup}
-      <Card title="Product Counter" sectioned>
+      <Card
+        title="Product Counter"
+        sectioned
+        primaryFooterAction={{
+          content: 'Populate 5 products',
+          onAction: handlePopulate,
+          loading: isLoading,
+        }}
+      >
         <TextContainer spacing="loose">
           <p>
             Sample products are created with a default title and price. You can
@@ -90,9 +100,6 @@ export function ProductsCard() {
               <TextStyle variation="strong">{productCount}</TextStyle>
             </DisplayText>
           </Heading>
-          <Button primary loading={isLoading} onClick={handlePopulate}>
-            Populate 5 products
-          </Button>
         </TextContainer>
       </Card>
     </>
