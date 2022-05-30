@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Provider } from '@shopify/app-bridge-react'
 
+const APPBRIDGE_HOST = new URLSearchParams(location.search).get('host')
 
 /**
  * A component to configure App Bridge.
@@ -29,15 +30,11 @@ export function AppBridgeProvider({ children }) {
     [history, location]
   )
 
-  const { current: host } = useRef(
-    new URL(window.location).searchParams.get('host')
-  )
-
   return (
     <Provider
       config={{
         apiKey: process.env.SHOPIFY_API_KEY,
-        host,
+        host: APPBRIDGE_HOST,
         forceRedirect: true,
       }}
       router={routerConfig}
