@@ -9,9 +9,9 @@ import {
   Heading,
 } from "@shopify/polaris";
 
-import { trophyImage } from 'assets'
+import { trophyImage } from '../assets'
 
-import { ProductsCard } from "components/ProductsCard";
+import { ProductsCard } from "../components";
 
 export default function HomePage() {
   return (

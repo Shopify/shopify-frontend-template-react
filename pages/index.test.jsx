@@ -1,9 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
+import { it, expect, vi } from "vitest";
 import { Link } from "@shopify/polaris";
 
-import { mount } from "test/mount";
+import { mount } from "../test/mount";
 import Index from "./index";
-import { ProductsCard } from "components/ProductsCard";
+import { ProductsCard } from "../components";
 
 vi.mock("components/ProductsCard", () => ({
   ProductsCard: () => null,
