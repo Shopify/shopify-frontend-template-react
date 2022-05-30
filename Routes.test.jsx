@@ -6,27 +6,31 @@ import Routes from "./Routes";
 
 const Index = () => null;
 const CamelCase = () => null;
+const NotFound = () => null;
 
 const pages = {
-  "./pages/index.jsx": {
+  './pages/index.jsx': {
     default: Index,
   },
-  "./pages/blog/[id].jsx": {
+  './pages/blog/[id].jsx': {
     default: () => {
-      const { id } = useParams();
-      return `${id}`;
+      const { id } = useParams()
+      return `${id}`
     },
   },
-  "./pages/[...catchAll].jsx": {
+  './pages/[...catchAll].jsx': {
     default: () => {
-      const { catchAll } = useParams();
-      return `${catchAll}`;
+      const { catchAll } = useParams()
+      return `${catchAll}`
     },
   },
-  "./pages/CamelCase.jsx": {
+  './pages/CamelCase.jsx': {
     default: CamelCase,
   },
-};
+  './pages/NotFound.jsx': {
+    default: NotFound,
+  },
+}
 
 it("renders index routes", async () => {
   const component = await mount(<Routes pages={pages} />, {
@@ -63,13 +67,16 @@ it("normalizes routes to lowercase", async () => {
 it("warns when a page has no default export", async () => {
   vi.spyOn(console, "warn").mockImplementation(() => {});
 
-  const pages = {
-    "./comments.jsx": {
-      Comments: () => null,
-    },
-  };
-
-  const component = await mount(<Routes pages={pages} />);
+  const component = await mount(
+    <Routes
+      pages={{
+        ...pages,
+        './comments.jsx': {
+          Comments: () => null,
+        },
+      }}
+    />
+  )
 
   expect(console.warn).toHaveBeenCalledWith(
     "./comments.jsx doesn't export a default React component"
