@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 import { useParams } from "react-router-dom";
-import { mount } from "test/mount";
+import { mount } from "./test/mount";
 
 import Routes from "./Routes";
 

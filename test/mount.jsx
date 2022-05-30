@@ -2,9 +2,9 @@ import { vi } from "vitest";
 import { createMount } from "@shopify/react-testing";
 import { PolarisTestProvider } from "@shopify/polaris";
 import { AppBridgeContext } from "@shopify/app-bridge-react/context";
-import { GraphQLProvider } from "components/providers/GraphQLProvider";
 import { BrowserRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { GraphQLProvider } from "../components";
 
 function createMockApp() {
   const localOrigin = "https://example.com";

@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import path from 'path'
 
 // prettier-ignore
 const INDEX_ROUTE = "^/(\\?.*)?$";
@@ -13,15 +12,6 @@ export default defineConfig({
   },
   esbuild: {
     jsxInject: `import React from 'react'`,
-  },
-  resolve: {
-    alias: {
-      assets: path.resolve(root, './assets'),
-      components: path.resolve(root, './components'),
-      hooks: path.resolve(root, './hooks'),
-      pages: path.resolve(root, './pages'),
-      test: path.resolve(root, './test'),
-    },
   },
   server: {
     port: process.env.FRONTEND_PORT,
