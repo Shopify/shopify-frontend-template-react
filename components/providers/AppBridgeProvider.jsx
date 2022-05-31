@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Provider } from '@shopify/app-bridge-react'
+import { Banner, Layout, Page } from '@shopify/polaris'
 
 const APPBRIDGE_HOST = new URLSearchParams(location.search).get('host')
 
@@ -29,6 +30,24 @@ export function AppBridgeProvider({ children }) {
     () => ({ history, location }),
     [history, location]
   )
+
+  if (!process.env.SHOPIFY_API_KEY) {
+    return (
+      <Page narrowWidth>
+        <Layout>
+          <Layout.Section>
+            <div style={{ marginTop: '100px' }}>
+              <Banner title="Missing Shopify App key" status="critical">
+                Your app is running without the SHOPIFY_API_KEY environment
+                variable. Please ensure that it is set when running or building
+                your React app.
+              </Banner>
+            </div>
+          </Layout.Section>
+        </Layout>
+      </Page>
+    )
+  }
 
   return (
     <Provider

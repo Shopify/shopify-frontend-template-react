@@ -4,6 +4,16 @@ import { defineConfig } from 'vite'
 const INDEX_ROUTE = "^/(\\?.*)?$";
 const API_ROUTE = '^/api/'
 
+if (
+  process.env.npm_lifecycle_event === 'build' &&
+  !process.env.CI &&
+  !process.env.SHOPIFY_API_KEY
+) {
+  console.warn(
+    '\nBuilding frontend app without an API key, this will produce a non-runnable frontend. Please set the SHOPIFY_API_KEY environment variable\n'
+  )
+}
+
 const root = new URL('.', import.meta.url).pathname
 export default defineConfig({
   root,
