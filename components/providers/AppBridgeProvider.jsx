@@ -37,7 +37,7 @@ export function AppBridgeProvider({ children }) {
         <Layout>
           <Layout.Section>
             <div style={{ marginTop: '100px' }}>
-              <Banner title="Missing Shopify App key" status="critical">
+              <Banner title="Missing Shopify API key" status="critical">
                 Your app is running without the SHOPIFY_API_KEY environment
                 variable. Please ensure that it is set when running or building
                 your React app.
