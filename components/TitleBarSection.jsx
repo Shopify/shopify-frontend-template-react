@@ -4,11 +4,12 @@ import { useLocation } from 'react-router-dom'
 export function TitleBarSection() {
   const { pathname } = useLocation()
   const showButtons = pathname === '/page2'
-
+  const pageTitle = pathname === '/' ? 'Page 1' : 'Page 2'
+  
   return (
     <>
       <TitleBar
-        title="App Name"
+        title={pageTitle}
         primaryAction={
           showButtons
             ? {
