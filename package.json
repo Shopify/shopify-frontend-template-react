@@ -1,7 +1,7 @@
 {
   "name": "shopify-frontend-template-react",
   "private": true,
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "vite build",
     "dev": "cross-env NODE_ENV=development node vite-server.js",
@@ -41,5 +41,5 @@
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true
-  } 
+  }
 }
