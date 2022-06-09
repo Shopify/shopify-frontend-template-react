@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Card,
   Heading,
   TextContainer,
   DisplayText,
   TextStyle,
-  Button,
 } from '@shopify/polaris'
 import { Toast } from '@shopify/app-bridge-react'
 import { gql } from 'graphql-request'
-
-import { useAuthenticatedFetch, useShopifyMutation } from '../hooks'
+import { useAppQuery, useShopifyMutation } from '../hooks'
 
 const PRODUCTS_QUERY = gql`
   mutation populateProduct($input: ProductInput!) {
@@ -21,34 +19,25 @@ const PRODUCTS_QUERY = gql`
     }
   }
 `
-
 export function ProductsCard() {
-  const fetch = useAuthenticatedFetch()
-  const mounted = useRef(false)
-
   const [populateProduct, { isLoading }] = useShopifyMutation({
     query: PRODUCTS_QUERY,
   })
   const [productCount, setProductCount] = useState('-')
   const [hasResults, setHasResults] = useState(false)
 
-  async function updateProductCount() {
-    const response = await fetch('/api/products-count')
-    const { count } = await response.json()
-    return count
-  }
+  const {
+    data,
+    refetch,
+  } = useAppQuery({
+    url: '/api/products-count',
+  })
 
   useEffect(() => {
-    mounted.current = true
-
-    updateProductCount().then((count) => {
-      if (mounted.current) setProductCount(count)
-    })
-
-    return () => {
-      mounted.current = false
+    if (data?.count) {
+      setProductCount(data.count)
     }
-  }, [mounted.current])
+  }, [data?.count, hasResults])
 
   const toastMarkup = hasResults && (
     <Toast
@@ -68,12 +57,8 @@ export function ProductsCard() {
         })
       )
     ).then(() => {
-      if (mounted.current) {
-        updateProductCount().then((count) => {
-          if (mounted.current) setProductCount(count)
-        })
-        setHasResults(true)
-      }
+      refetch()
+      setHasResults(true)
     })
   }
 
@@ -109,7 +94,6 @@ export function ProductsCard() {
 function randomTitle() {
   const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)]
   const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)]
-
   return `${adjective} ${noun}`
 }
 
