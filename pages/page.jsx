@@ -1,8 +1,8 @@
-import { Card, Page, Layout, TextContainer, Heading } from '@shopify/polaris'
+import { Card, Page as PolarisPage, Layout, TextContainer, Heading } from '@shopify/polaris'
 
-export default function Page2() {
+export default function Page() {
   return (
-    <Page>
+    <PolarisPage>
       <Layout>
         <Layout.Section>
           <Card sectioned>
@@ -27,6 +27,6 @@ export default function Page2() {
           </Card>
         </Layout.Section>
       </Layout>
-    </Page>
+    </PolarisPage>
   )
 }

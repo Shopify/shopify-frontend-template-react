@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 export function TitleBarSection() {
   const { pathname } = useLocation()
-  const showButtons = pathname === '/page2'
+  const showButtons = pathname === '/page'
 
   return (
     <>
@@ -31,12 +31,8 @@ export function TitleBarSection() {
       <NavigationMenu
         navigationLinks={[
           {
-            label: 'Page 1',
-            destination: '/',
-          },
-          {
-            label: 'Page 2',
-            destination: '/page2',
+            label: 'Page',
+            destination: '/page',
           },
         ]}
       />
