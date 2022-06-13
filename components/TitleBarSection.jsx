@@ -31,8 +31,8 @@ export function TitleBarSection() {
       <NavigationMenu
         navigationLinks={[
           {
-            label: 'Page',
-            destination: '/page',
+            label: 'Page name',
+            destination: '/pagename',
           },
         ]}
       />
