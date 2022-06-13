@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 // prettier-ignore
 const INDEX_ROUTE = "^/(\\?.*)?$";
@@ -14,7 +16,7 @@ if (
   )
 }
 
-const root = new URL('.', import.meta.url).pathname
+const root = dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   root,
   define: {
