@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 export function TitleBarSection() {
   const { pathname } = useLocation()
-  const showButtons = pathname === '/page'
+  const showButtons = pathname === '/pagename'
 
   return (
     <>
