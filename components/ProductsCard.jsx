@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Card,
   Heading,
@@ -20,33 +20,36 @@ const PRODUCTS_QUERY = gql`
   }
 `
 export function ProductsCard() {
-  const [populateProduct, { isLoading }] = useShopifyMutation({
+  const [isLoading, setIsLoading] = useState(true)
+  const [showToast, setShowToast] = useState(false)
+  const [populateProduct] = useShopifyMutation({
     query: PRODUCTS_QUERY,
   })
-  const [productCount, setProductCount] = useState('-')
-  const [hasResults, setHasResults] = useState(false)
 
   const {
     data,
-    refetch,
+    refetch: refetchProductCount,
+    isLoading: isLoadingCount,
+    isRefetching: isRefetchingCount,
   } = useAppQuery({
     url: '/api/products-count',
+    reactQueryOptions: {
+      onSuccess: () => {
+        setIsLoading(false)
+      },
+    },
   })
 
-  useEffect(() => {
-    if (data?.count) {
-      setProductCount(data.count)
-    }
-  }, [data?.count, hasResults])
-
-  const toastMarkup = hasResults && (
+  const toastMarkup = showToast && !isRefetchingCount && (
     <Toast
       content="5 products created!"
-      onDismiss={() => setHasResults(false)}
+      onDismiss={() => setShowToast(false)}
     />
   )
 
   const handlePopulate = () => {
+    setIsLoading(true)
+
     Promise.all(
       Array.from({ length: 5 }).map(() =>
         populateProduct({
@@ -56,9 +59,9 @@ export function ProductsCard() {
           },
         })
       )
-    ).then(() => {
-      refetch()
-      setHasResults(true)
+    ).then(async () => {
+      await refetchProductCount()
+      setShowToast(true)
     })
   }
 
@@ -82,7 +85,9 @@ export function ProductsCard() {
           <Heading element="h4">
             TOTAL PRODUCTS
             <DisplayText size="medium">
-              <TextStyle variation="strong">{productCount}</TextStyle>
+              <TextStyle variation="strong">
+                {isLoadingCount ? '-' : data.count}
+              </TextStyle>
             </DisplayText>
           </Heading>
         </TextContainer>
