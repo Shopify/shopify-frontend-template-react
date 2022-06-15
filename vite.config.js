@@ -2,10 +2,6 @@ import { defineConfig } from 'vite'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
-// prettier-ignore
-const INDEX_ROUTE = "^/(\\?.*)?$";
-const API_ROUTE = '^/api(/|(\\?.*)?$)'
-
 if (
   process.env.npm_lifecycle_event === 'build' &&
   !process.env.CI &&
@@ -16,6 +12,16 @@ if (
   )
 }
 
+const proxyOptions = {
+  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  changeOrigin: false,
+  secure: true,
+  ws: false,
+}
+
+const host = process.env.HOST
+  ? process.env.HOST.replace(/https:\/\//, '')
+  : undefined
 const root = dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   root,
@@ -30,26 +36,15 @@ export default defineConfig({
   },
   server: {
     port: process.env.FRONTEND_PORT,
-    middlewareMode: 'html',
     hmr: {
-      protocol: 'ws',
-      host: 'localhost',
-      port: 64999,
-      clientPort: 64999,
+      protocol: host ? 'wss' : 'ws',
+      host: host || 'localhost',
+      port: process.env.FRONTEND_PORT,
+      clientPort: 443,
     },
     proxy: {
-      [INDEX_ROUTE]: {
-        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-        changeOrigin: false,
-        secure: true,
-        ws: false,
-      },
-      [API_ROUTE]: {
-        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-        changeOrigin: false,
-        secure: true,
-        ws: false,
-      },
+      '^/(\\?.*)?$': proxyOptions,
+      '^/api(/|(\\?.*)?$)': proxyOptions,
     },
   },
   test: {
