@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 // prettier-ignore
 const INDEX_ROUTE = "^/(\\?.*)?$";
-const API_ROUTE = '^/api/'
+const API_ROUTE = '^/api(/|(\\?.*)?$)'
 
 if (
   process.env.npm_lifecycle_event === 'build' &&
