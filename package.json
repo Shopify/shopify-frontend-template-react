@@ -32,7 +32,7 @@
     "jsdom": "^19.0.0",
     "prettier": "^2.6.0",
     "vi-fetch": "^0.6.1",
-    "vitest": "^0.10.0"
+    "vitest": "^0.15.1"
   },
   "prettier": {
     "trailingComma": "es5",
