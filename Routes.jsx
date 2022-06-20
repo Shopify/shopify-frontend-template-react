@@ -8,7 +8,7 @@ import { Routes as ReactRouterRoutes, Route } from 'react-router-dom'
  * Some examples:
  * * `/pages/index.jsx` matches `/`
  * * `/pages/blog/[id].jsx` matches `/blog/123`
- * * `/pages/[...catchAll].jsx` matches any URL not explictly matched
+ * * `/pages/[...catchAll].jsx` matches any URL not explicitly matched
  *
  * @param {object} pages value of import.meta.globEager(). See https://vitejs.dev/guide/features.html#glob-import
  *
