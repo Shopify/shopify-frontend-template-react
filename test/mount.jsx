@@ -29,10 +29,10 @@ export const mount = createMount({
     }
 
     return {
-      history
-    }
+      history,
+    };
   },
-  render(element, {history}) {
+  render(element, { history }) {
     return (
       <PolarisTestProvider>
         <BrowserRouter>
