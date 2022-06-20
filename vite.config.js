@@ -1,10 +1,7 @@
 import { defineConfig } from 'vite'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-
-// prettier-ignore
-const INDEX_ROUTE = "^/(\\?.*)?$";
-const API_ROUTE = '^/api(/|(\\?.*)?$)'
+import https from 'https'
 
 if (
   process.env.npm_lifecycle_event === 'build' &&
@@ -16,9 +13,42 @@ if (
   )
 }
 
-const root = dirname(fileURLToPath(import.meta.url))
+const proxyOptions = {
+  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  changeOrigin: false,
+  secure: true,
+  ws: false,
+}
+
+const host = process.env.HOST
+  ? process.env.HOST.replace(/https:\/\//, '')
+  : undefined
+
+// HMR doesn't work on Firefox using localhost, so you can temporarily get that to work by setting the
+// SHOPIFY_VITE_HMR_USE_POLLING env var when running this
+let hmrConfig
+if (process.env.SHOPIFY_VITE_HMR_USE_POLLING) {
+  hmrConfig = {
+    server: https.createServer(),
+  }
+} else if (process.env.SHOPIFY_VITE_HMR_USE_WSS) {
+  hmrConfig = {
+    protocol: host ? 'wss' : 'ws',
+    host: host || 'localhost',
+    port: process.env.FRONTEND_PORT,
+    clientPort: 443,
+  }
+} else {
+  hmrConfig = {
+    protocol: 'ws',
+    host: 'localhost',
+    port: 64999,
+    clientPort: 64999,
+  }
+}
+
 export default defineConfig({
-  root,
+  root: dirname(fileURLToPath(import.meta.url)),
   define: {
     'process.env.SHOPIFY_API_KEY': JSON.stringify(process.env.SHOPIFY_API_KEY),
   },
@@ -29,27 +59,12 @@ export default defineConfig({
     preserveSymlinks: true,
   },
   server: {
+    host: process.env.SHOPIFY_VITE_HMR_USE_WSS ? '0.0.0.0' : 'localhost',
     port: process.env.FRONTEND_PORT,
-    middlewareMode: 'html',
-    hmr: {
-      protocol: 'ws',
-      host: 'localhost',
-      port: 64999,
-      clientPort: 64999,
-    },
+    hmr: hmrConfig,
     proxy: {
-      [INDEX_ROUTE]: {
-        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-        changeOrigin: false,
-        secure: true,
-        ws: false,
-      },
-      [API_ROUTE]: {
-        target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
-        changeOrigin: false,
-        secure: true,
-        ws: false,
-      },
+      '^/(\\?.*)?$': proxyOptions,
+      '^/api(/|(\\?.*)?$)': proxyOptions,
     },
   },
   test: {
