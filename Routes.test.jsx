@@ -9,32 +9,32 @@ const CamelCase = () => null;
 const NotFound = () => null;
 
 const pages = {
-  './pages/index.jsx': {
+  "./pages/index.jsx": {
     default: Index,
   },
-  './pages/blog/[id].jsx': {
+  "./pages/blog/[id].jsx": {
     default: () => {
-      const { id } = useParams()
-      return `${id}`
+      const { id } = useParams();
+      return `${id}`;
     },
   },
-  './pages/[...catchAll].jsx': {
+  "./pages/[...catchAll].jsx": {
     default: () => {
-      const { catchAll } = useParams()
-      return `${catchAll}`
+      const { catchAll } = useParams();
+      return `${catchAll}`;
     },
   },
-  './pages/CamelCase.jsx': {
+  "./pages/CamelCase.jsx": {
     default: CamelCase,
   },
-  './pages/NotFound.jsx': {
+  "./pages/NotFound.jsx": {
     default: NotFound,
   },
-}
+};
 
 it("renders index routes", async () => {
   const component = await mount(<Routes pages={pages} />, {
-    initialPath: "/"
+    initialPath: "/",
   });
 
   expect(component).toContainReactComponent(Index);
@@ -50,7 +50,7 @@ it("renders dynamic routes using [variable]", async () => {
 
 it("renders catch all routes using [...variable]", async () => {
   const component = await mount(<Routes pages={pages} />, {
-    initialPath: '/abc'
+    initialPath: "/abc",
   });
 
   expect(component).toContainReactText("abc");
@@ -71,12 +71,12 @@ it("warns when a page has no default export", async () => {
     <Routes
       pages={{
         ...pages,
-        './comments.jsx': {
+        "./comments.jsx": {
           Comments: () => null,
         },
       }}
     />
-  )
+  );
 
   expect(console.warn).toHaveBeenCalledWith(
     "./comments.jsx doesn't export a default React component"
