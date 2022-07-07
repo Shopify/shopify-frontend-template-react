@@ -7,7 +7,6 @@ import {
   TextStyle,
 } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
-import { gql } from "graphql-request";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
 export function ProductsCard() {

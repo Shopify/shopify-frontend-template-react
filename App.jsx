@@ -4,7 +4,7 @@ import Routes from "./Routes";
 
 import {
   AppBridgeProvider,
-  GraphQLProvider,
+  QueryProvider,
   PolarisProvider,
 } from "./components";
 
@@ -17,7 +17,7 @@ export default function App() {
     <PolarisProvider>
       <BrowserRouter>
         <AppBridgeProvider>
-          <GraphQLProvider>
+          <QueryProvider>
             <NavigationMenu
               navigationLinks={[
                 {
@@ -27,7 +27,7 @@ export default function App() {
               ]}
             />
             <Routes pages={pages} />
-          </GraphQLProvider>
+          </QueryProvider>
         </AppBridgeProvider>
       </BrowserRouter>
     </PolarisProvider>
