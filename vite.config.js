@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import https from "https";
+import react from '@vitejs/plugin-react';
 
 if (
   process.env.npm_lifecycle_event === "build" &&
@@ -49,6 +50,7 @@ if (process.env.SHOPIFY_VITE_HMR_USE_POLLING) {
 
 export default defineConfig({
   root: dirname(fileURLToPath(import.meta.url)),
+  plugins: [react()],
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
   },
