@@ -69,12 +69,4 @@ export default defineConfig({
       "^/api(/|(\\?.*)?$)": proxyOptions,
     },
   },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    setupFiles: "./test/setup.js",
-    deps: {
-      inline: ["@shopify/react-testing"],
-    },
-  },
 });
