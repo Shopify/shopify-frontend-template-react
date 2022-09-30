@@ -10,7 +10,7 @@ import { Banner, Layout, Page } from "@shopify/polaris";
  * 1. Ensures that navigating inside the app updates the host URL.
  * 2. Configures the App Bridge Provider, which unlocks functionality provided by the host.
  *
- * See: https://shopify.dev/apps/tools/app-bridge/react-components
+ * See: https://shopify.dev/apps/tools/app-bridge/getting-started/using-react
  */
 export function AppBridgeProvider({ children }) {
   const location = useLocation();
