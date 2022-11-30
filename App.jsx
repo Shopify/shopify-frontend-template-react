@@ -6,8 +6,8 @@ import {
   AppBridgeProvider,
   QueryProvider,
   PolarisProvider,
-  LoadingProvider,
 } from "./components";
+import { ReactQueryLoading } from "./components/ReactQueryLoading";
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -19,17 +19,16 @@ export default function App() {
       <BrowserRouter>
         <AppBridgeProvider>
           <QueryProvider>
-            <LoadingProvider>
-              <NavigationMenu
-                navigationLinks={[
-                  {
-                    label: "Page name",
-                    destination: "/pagename",
-                  },
-                ]}
-              />
-              <Routes pages={pages} />
-            </LoadingProvider>
+            <ReactQueryLoading />
+            <NavigationMenu
+              navigationLinks={[
+                {
+                  label: "Page name",
+                  destination: "/pagename",
+                },
+              ]}
+            />
+            <Routes pages={pages} />
           </QueryProvider>
         </AppBridgeProvider>
       </BrowserRouter>
