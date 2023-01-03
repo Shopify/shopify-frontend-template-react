@@ -6,14 +6,12 @@ import {
   DisplayText,
   TextStyle,
 } from "@shopify/polaris";
-import { Toast } from "@shopify/app-bridge-react";
-import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+import { useAppQuery } from "../hooks";
 
 export function ProductsCard() {
   const emptyToastProps = { content: null };
   const [isLoading, setIsLoading] = useState(true);
   const [toastProps, setToastProps] = useState(emptyToastProps);
-  const fetch = useAuthenticatedFetch();
 
   const {
     data,
@@ -28,10 +26,6 @@ export function ProductsCard() {
       },
     },
   });
-
-  const toastMarkup = toastProps.content && !isRefetchingCount && (
-    <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
-  );
 
   const handlePopulate = async () => {
     setIsLoading(true);
@@ -51,7 +45,6 @@ export function ProductsCard() {
 
   return (
     <>
-      {toastMarkup}
       <Card
         title="Product Counter"
         sectioned
