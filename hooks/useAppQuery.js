@@ -1,3 +1,4 @@
+import { useAuthenticatedFetch } from "./useAuthenticatedFetch";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 
@@ -14,14 +15,15 @@ import { useQuery } from "react-query";
  * @returns Return value of useQuery.  See: https://react-query.tanstack.com/reference/useQuery.
  */
 export const useAppQuery = ({ url, fetchInit = {}, reactQueryOptions }) => {
-  const myFetch = useMemo(() => {
+  const authenticatedFetch = useAuthenticatedFetch();
+  const fetch = useMemo(() => {
     return async () => {
-      const response = await fetch(url, fetchInit);
+      const response = await authenticatedFetch(url, fetchInit);
       return response.json();
     };
   }, [url, JSON.stringify(fetchInit)]);
 
-  return useQuery(url, myFetch, {
+  return useQuery(url, fetch, {
     ...reactQueryOptions,
     refetchOnWindowFocus: false,
   });

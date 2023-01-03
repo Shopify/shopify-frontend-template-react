@@ -1,7 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
-import Routes from "./Routes";
+import { NavigationMenu } from "@shopify/app-bridge-react";
 
-import { QueryProvider, PolarisProvider } from "./components";
+import Routes from "./Routes";
+import { ShopifyAppProvider } from "./components";
+
+const IS_APP_EMBEDDED = false;
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -9,12 +12,20 @@ export default function App() {
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
 
   return (
-    <PolarisProvider>
-      <BrowserRouter>
-        <QueryProvider>
-          <Routes pages={pages} />
-        </QueryProvider>
-      </BrowserRouter>
-    </PolarisProvider>
+    <BrowserRouter>
+      <ShopifyAppProvider embedded={IS_APP_EMBEDDED}>
+        {IS_APP_EMBEDDED && (
+          <NavigationMenu
+            navigationLinks={[
+              {
+                label: "Page name",
+                destination: "/pagename",
+              },
+            ]}
+          />
+        )}
+        <Routes pages={pages} />
+      </ShopifyAppProvider>
+    </BrowserRouter>
   );
 }

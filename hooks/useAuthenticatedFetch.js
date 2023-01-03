@@ -1,6 +1,9 @@
 import { authenticatedFetch } from "@shopify/app-bridge-utils";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { Redirect } from "@shopify/app-bridge/actions";
+import { useContext, useEffect, useState } from "react";
+
+import { ShopifyAppContext } from "../components/providers/ShopifyAppProvider";
 
 /**
  * A hook that returns an auth-aware fetch function.
@@ -15,8 +18,16 @@ import { Redirect } from "@shopify/app-bridge/actions";
  * @returns {Function} fetch function
  */
 export function useAuthenticatedFetch() {
-  const app = useAppBridge();
-  const fetchFunction = authenticatedFetch(app);
+  const appContext = useContext(ShopifyAppContext);
+  let fetchFunction = fetch;
+  try {
+    const app = useAppBridge();
+    fetchFunction = authenticatedFetch(app);
+  } catch (err) {
+    if (appContext.embedded) {
+      throw err;
+    }
+  }
 
   return async (uri, options) => {
     const response = await fetchFunction(uri, options);
