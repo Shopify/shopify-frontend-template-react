@@ -11,6 +11,9 @@
   "engines": {
     "node": ">= 12.16"
   },
+  "stylelint": {
+    "extends": "@shopify/stylelint-polaris"
+  },
   "dependencies": {
     "@shopify/app-bridge": "^3.1.0",
     "@shopify/app-bridge-react": "^3.1.0",
