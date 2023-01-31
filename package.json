@@ -11,11 +11,15 @@
   "engines": {
     "node": ">= 12.16"
   },
+  "stylelint": {
+    "extends": "@shopify/stylelint-polaris"
+  },
   "dependencies": {
     "@shopify/app-bridge": "^3.1.0",
     "@shopify/app-bridge-react": "^3.1.0",
     "@shopify/app-bridge-utils": "^3.1.0",
     "@shopify/polaris": "^9.11.0",
+    "@shopify/stylelint-polaris": "^5.1.0",
     "@vitejs/plugin-react": "1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
