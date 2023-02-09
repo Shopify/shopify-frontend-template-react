@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Card,
-  Heading,
-  TextContainer,
-  DisplayText,
-  TextStyle,
-} from "@shopify/polaris";
+import { Card, TextContainer, Text } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
@@ -66,14 +60,12 @@ export function ProductsCard() {
             Sample products are created with a default title and price. You can
             remove them at any time.
           </p>
-          <Heading element="h4">
+          <Text as="h4" variant="headingMd">
             TOTAL PRODUCTS
-            <DisplayText size="medium">
-              <TextStyle variation="strong">
-                {isLoadingCount ? "-" : data.count}
-              </TextStyle>
-            </DisplayText>
-          </Heading>
+            <Text variant="bodyMd" as="p" fontWeight="semibold">
+              {isLoadingCount ? "-" : data.count}
+            </Text>
+          </Text>
         </TextContainer>
       </Card>
     </>
