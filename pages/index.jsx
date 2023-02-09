@@ -6,7 +6,7 @@ import {
   Image,
   Stack,
   Link,
-  Heading,
+  Text,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 
@@ -29,7 +29,9 @@ export default function HomePage() {
             >
               <Stack.Item fill>
                 <TextContainer spacing="loose">
-                  <Heading>Nice work on building a Shopify app 🎉</Heading>
+                  <Text as="h2" variant="headingMd">
+                    Nice work on building a Shopify app 🎉
+                  </Text>
                   <p>
                     Your app is ready to explore! It contains everything you
                     need to get started including the{" "}
