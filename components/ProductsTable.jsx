@@ -9,35 +9,59 @@ import {
 } from "@shopify/polaris";
 import React from "react";
 
+import { useAuthenticatedFetch } from "../hooks/useAuthenticatedFetch";
+
 export default function ProductsTable({ productsArray }) {
-  const resourceName = {
-    singular: "Selected Product",
-    plural: "Selected Products",
-  };
+  // Custom implementation of fetch that adds Shopify auth
+  const fetch = useAuthenticatedFetch();
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(productsArray);
 
   const promotedBulkActions = [
     {
-      content: "Edit products",
-      onAction: () => console.log("Todo: implement bulk edit"),
-    },
-  ];
-  const bulkActions = [
-    {
       content: "Add tags",
-      onAction: () => console.log("Todo: implement bulk add tags"),
+      onAction: () => addTags(selectedResources),
     },
     {
       content: "Remove tags",
-      onAction: () => console.log("Todo: implement bulk remove tags"),
-    },
-    {
-      content: "Delete products",
-      onAction: () => console.log("Todo: implement bulk delete"),
+      onAction: () => removeTags(selectedResources),
     },
   ];
+
+  async function addTags(params) {
+    console.log("adding tags to backend", params);
+
+    const response = await fetch("/api/producttags", {
+      method: "POST",
+      body: JSON.stringify({ products: params, tags: ["test"] }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response?.ok) {
+      const data = await response.json();
+      console.log("success", data);
+    } else {
+      console.log("error", response);
+    }
+  }
+
+  async function removeTags(params) {
+    console.log("removing tags to backend", params);
+
+    const response = await fetch("/api/producttags", {
+      method: "DELETE",
+      body: JSON.stringify({ products: params, tags: ["test"] }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response?.ok) {
+      const data = await response.json();
+      console.log("success", data);
+    } else {
+      console.log("error", response);
+    }
+  }
 
   const rowMarkup = productsArray.map(({ id, title, tags }, index) => (
     <IndexTable.Row
@@ -64,13 +88,15 @@ export default function ProductsTable({ productsArray }) {
   return (
     <LegacyCard>
       <IndexTable
-        resourceName={resourceName}
+        resourceName={{
+          singular: "Selected Product",
+          plural: "Selected Products",
+        }}
         itemCount={productsArray.length}
         selectedItemsCount={
           allResourcesSelected ? "All" : selectedResources.length
         }
         onSelectionChange={handleSelectionChange}
-        bulkActions={bulkActions}
         promotedBulkActions={promotedBulkActions}
         headings={[{ title: "Name" }, { title: "Tags" }]}
         emptyState={<EmptyState />}
