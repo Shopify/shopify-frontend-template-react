@@ -9,12 +9,12 @@ import {
 } from "@shopify/polaris";
 import React from "react";
 
-import { useAuthenticatedFetch } from "../hooks/useAuthenticatedFetch";
-
-export default function ProductsTable({ productsArray }) {
-  // Custom implementation of fetch that adds Shopify auth
-  const fetch = useAuthenticatedFetch();
-
+export default function ProductsTable({
+  productsArray,
+  addTags,
+  removeTags,
+  isLoading = false,
+}) {
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(productsArray);
 
@@ -28,40 +28,6 @@ export default function ProductsTable({ productsArray }) {
       onAction: () => removeTags(selectedResources),
     },
   ];
-
-  async function addTags(params) {
-    console.log("adding tags to backend", params);
-
-    const response = await fetch("/api/producttags", {
-      method: "POST",
-      body: JSON.stringify({ products: params, tags: ["test"] }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response?.ok) {
-      const data = await response.json();
-      console.log("success", data);
-    } else {
-      console.log("error", response);
-    }
-  }
-
-  async function removeTags(params) {
-    console.log("removing tags to backend", params);
-
-    const response = await fetch("/api/producttags", {
-      method: "DELETE",
-      body: JSON.stringify({ products: params, tags: ["test"] }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response?.ok) {
-      const data = await response.json();
-      console.log("success", data);
-    } else {
-      console.log("error", response);
-    }
-  }
 
   const rowMarkup = productsArray.map(({ id, title, tags }, index) => (
     <IndexTable.Row
@@ -89,10 +55,11 @@ export default function ProductsTable({ productsArray }) {
     <LegacyCard>
       <IndexTable
         resourceName={{
-          singular: "Selected Product",
-          plural: "Selected Products",
+          singular: "Product tags",
+          plural: "Products tags",
         }}
         itemCount={productsArray.length}
+        loading={isLoading}
         selectedItemsCount={
           allResourcesSelected ? "All" : selectedResources.length
         }
