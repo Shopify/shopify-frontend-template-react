@@ -13,6 +13,7 @@ export default function HomePage() {
   const { show } = useToast();
   const [productSelectorOpen, setProductSelectorOpen] = useState(false);
   const [productsTableData, setProductsTableData] = useState([]);
+  const [tagsToUpdate, setTagsToUpdate] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   function handleProductSelection(selectPayload) {
@@ -24,7 +25,7 @@ export default function HomePage() {
     setIsLoading(true);
     const response = await fetch("/api/producttags", {
       method: "POST",
-      body: JSON.stringify({ products: params, tags: ["test"] }),
+      body: JSON.stringify({ products: params, tags: tagsToUpdate }),
       headers: { "Content-Type": "application/json" },
     });
     setIsLoading(false);
@@ -41,7 +42,7 @@ export default function HomePage() {
     setIsLoading(true);
     const response = await fetch("/api/producttags", {
       method: "DELETE",
-      body: JSON.stringify({ products: params, tags: ["test"] }),
+      body: JSON.stringify({ products: params, tags: tagsToUpdate }),
       headers: { "Content-Type": "application/json" },
     });
     setIsLoading(false);
@@ -79,7 +80,11 @@ export default function HomePage() {
       />
       <Layout>
         <Layout.Section>
-          <ProductTagsInput getTags={getTags} />
+          <ProductTagsInput
+            getTags={getTags}
+            tagsToUpdate={tagsToUpdate}
+            setTagsToUpdate={setTagsToUpdate}
+          />
         </Layout.Section>
         <Layout.Section>
           <ProductsTable
@@ -87,6 +92,7 @@ export default function HomePage() {
             addTags={addTags}
             removeTags={removeTags}
             isLoading={isLoading}
+            tagsToUpdate={tagsToUpdate}
           />
         </Layout.Section>
       </Layout>

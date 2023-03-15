@@ -12,9 +12,12 @@ import React from "react";
 
 import { useState, useCallback } from "react";
 
-export default function ProductTagsInput({ getTags }) {
+export default function ProductTagsInput({
+  getTags,
+  tagsToUpdate,
+  setTagsToUpdate,
+}) {
   const [deselectedOptions, setDeselectedOptions] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState(deselectedOptions);
   const [loading, setLoading] = useState(false);
@@ -57,12 +60,10 @@ export default function ProductTagsInput({ getTags }) {
 
   const updateSelection = useCallback(
     (selected) => {
-      if (selectedOptions.includes(selected)) {
-        setSelectedOptions(
-          selectedOptions.filter((option) => option !== selected)
-        );
+      if (tagsToUpdate.includes(selected)) {
+        setTagsToUpdate(tagsToUpdate.filter((option) => option !== selected));
       } else {
-        setSelectedOptions([...selectedOptions, selected]);
+        setTagsToUpdate([...tagsToUpdate, selected]);
       }
 
       const matchedOption = options.find((option) => {
@@ -71,19 +72,19 @@ export default function ProductTagsInput({ getTags }) {
 
       updateText("");
     },
-    [options, selectedOptions, updateText]
+    [options, tagsToUpdate, updateText]
   );
 
   const removeTag = useCallback(
     (tag) => () => {
-      const options = [...selectedOptions];
+      const options = [...tagsToUpdate];
       options.splice(options.indexOf(tag), 1);
-      setSelectedOptions(options);
+      setTagsToUpdate(options);
     },
-    [selectedOptions]
+    [tagsToUpdate]
   );
 
-  const tagsMarkup = selectedOptions.map((option) => (
+  const tagsMarkup = tagsToUpdate.map((option) => (
     <Tag key={`option-${option}`} onRemove={removeTag(option)}>
       {option}
     </Tag>
@@ -98,7 +99,7 @@ export default function ProductTagsInput({ getTags }) {
             <Listbox.Option
               key={`${value}`}
               value={value}
-              selected={selectedOptions.includes(value)}
+              selected={tagsToUpdate.includes(value)}
               accessibilityLabel={label}
             >
               {label}

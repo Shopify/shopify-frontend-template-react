@@ -14,17 +14,18 @@ export default function ProductsTable({
   addTags,
   removeTags,
   isLoading = false,
+  tagsToUpdate,
 }) {
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(productsArray);
 
   const promotedBulkActions = [
     {
-      content: "Add tags",
+      content: "Add selected tags",
       onAction: () => addTags(selectedResources),
     },
     {
-      content: "Remove tags",
+      content: "Remove selected tags",
       onAction: () => removeTags(selectedResources),
     },
   ];
