@@ -27,7 +27,7 @@ export default function App() {
                 },
                 {
                   label: "Product Tagger",
-                  destination: "/producttags",
+                  destination: "/product-tagger",
                 },
               ]}
             />
