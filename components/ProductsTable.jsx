@@ -56,7 +56,7 @@ export default function ProductsTable({
       <IndexTable
         resourceName={{
           singular: "Product tags",
-          plural: "Products tags",
+          plural: "Products and tags",
         }}
         itemCount={productsArray.length}
         loading={isLoading}
