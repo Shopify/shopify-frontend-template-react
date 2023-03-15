@@ -15,6 +15,8 @@ import { trophyImage } from "../assets";
 import React from "react";
 
 function IntroCard() {
+  const navigate = useNavigate();
+
   return (
     <LegacyCard sectioned>
       <Stack
@@ -43,8 +45,15 @@ function IntroCard() {
               UI library and components.
             </p>
             <p>
-              Ready to go? Explore the product tagger to see a sample of how to
-              build an app.
+              Ready to go? Explore the{" "}
+              <Link
+                onClick={() => {
+                  navigate("/product-tagger");
+                }}
+              >
+                product tagger
+              </Link>{" "}
+              to see a sample of how to build an app.
             </p>
             <p>
               Learn more about building your app in{" "}
