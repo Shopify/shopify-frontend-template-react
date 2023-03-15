@@ -43,11 +43,11 @@ function IntroCard() {
               UI library and components.
             </p>
             <p>
-              Ready to go? Start populating your app with some sample products
-              to view and test in your store.{" "}
+              Ready to go? Explore the product tagger to see a sample of how to
+              build an app.
             </p>
             <p>
-              Learn more about building out your app in{" "}
+              Learn more about building your app in{" "}
               <Link
                 url="https://shopify.dev/apps/getting-started/add-functionality"
                 external
@@ -81,7 +81,7 @@ export default function HomePage() {
         title="Home"
         primaryAction={{
           content: "View Product Tagger",
-          onAction: () => navigate("/producttags"),
+          onAction: () => navigate("/product-tagger"),
         }}
       />
       <Layout>

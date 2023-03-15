@@ -3,6 +3,7 @@ import { TitleBar, ResourcePicker, useToast } from "@shopify/app-bridge-react";
 
 import { useAuthenticatedFetch } from "../hooks/useAuthenticatedFetch";
 import ProductsTable from "../components/ProductsTable";
+import ProductTagsInput from "../components/ProductTagsInput";
 
 import React, { useState } from "react";
 
@@ -53,16 +54,33 @@ export default function HomePage() {
     }
   }
 
+  async function getTags() {
+    const response = await fetch("/api/producttags", {
+      method: "GET",
+    });
+
+    if (response?.ok) {
+      const data = await response.json();
+      return data?.tags || [];
+    } else {
+      show("Error getting tags", { isError: true });
+      console.error("error response", response);
+    }
+  }
+
   return (
     <Page narrowWidth>
       <TitleBar
-        title="Product Tags"
+        title="Product Tagger"
         primaryAction={{
           content: "Select Products",
           onAction: () => setProductSelectorOpen(true),
         }}
       />
       <Layout>
+        <Layout.Section>
+          <ProductTagsInput getTags={getTags} />
+        </Layout.Section>
         <Layout.Section>
           <ProductsTable
             productsArray={productsTableData}
