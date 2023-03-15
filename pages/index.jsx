@@ -8,11 +8,9 @@ import {
   Link,
   Heading,
 } from "@shopify/polaris";
-import { TitleBar, ResourcePicker } from "@shopify/app-bridge-react";
+import { TitleBar, useNavigate } from "@shopify/app-bridge-react";
 
 import { trophyImage } from "../assets";
-
-import ProductsTable from "../components/ProductsTable";
 
 import React from "react";
 
@@ -75,38 +73,22 @@ function IntroCard() {
 }
 
 export default function HomePage() {
-  const [productSelectorOpen, setProductSelectorOpen] = React.useState(false);
-  const [productsTableData, setProductsTableData] = React.useState([]);
-
-  function handleProductSelection(selectPayload) {
-    setProductsTableData(selectPayload.selection);
-    setProductSelectorOpen(false);
-  }
+  const navigate = useNavigate();
 
   return (
     <Page narrowWidth>
       <TitleBar
-        title="Product Selector"
+        title="Home"
         primaryAction={{
-          content: "Select Products",
-          onAction: () => setProductSelectorOpen(true),
+          content: "View Product Tagger",
+          onAction: () => navigate("/producttags"),
         }}
       />
       <Layout>
         <Layout.Section>
-          <ProductsTable productsArray={productsTableData} />
           <IntroCard />
         </Layout.Section>
       </Layout>
-
-      {/* Resource picker opens as a modal via App Bridge */}
-      <ResourcePicker
-        resourceType="Product"
-        showVariants={false}
-        open={productSelectorOpen}
-        onCancel={() => setProductSelectorOpen(false)}
-        onSelection={handleProductSelection}
-      />
     </Page>
   );
 }
