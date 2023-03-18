@@ -4,7 +4,8 @@ import { useRouteError } from "react-router-dom";
 /**
 * ErrorBoundary
 * @desc General example error element
-* more details at https://reactrouter.com/en/main/route/error-element
+*
+* See: https://reactrouter.com/en/main/route/error-element
 */
 
 export default function ErrorBoundary() {
@@ -17,7 +18,7 @@ export default function ErrorBoundary() {
       <Layout>
         <Layout.Section>
           <div style={{ marginTop: "100px" }}>
-            <Banner title="Oh No!" status="critical">
+            <Banner title="Something went wrong" status="critical">
               <p>We encountered an error</p>
             </Banner>
           </div>
