@@ -1,4 +1,6 @@
-import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { AppBridgeProvider } from "../../components";
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 /**
  * File-based routing.
@@ -10,31 +12,31 @@ import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
  * * `/pages/blog/[id].jsx` matches `/blog/123`
  * * `/pages/[...catchAll].jsx` matches any URL not explicitly matched
  *
- * @param {object} pages value of import.meta.globEager(). See https://vitejs.dev/guide/features.html#glob-import
- *
- * @return {Routes} `<Routes/>` from React Router, with a `<Route/>` for each file in `pages`
+ * @return {RouterProvider} `<RouterProvider/>` from React Router, with a `<Route/>` for each file in `pages`
  */
-export default function Routes({ pages }) {
+
+export function AppRouterProvider () {
+  // Any .tsx or .jsx files in /pages will become a route
+  // See https://vitejs.dev/guide/features.html#glob-import
+  const pages = import.meta.globEager('../../pages/**/!(*.test.[jt]sx)*.([jt]sx)');
   const routes = useRoutes(pages);
-  const routeComponents = routes.map(({ path, component: Component }) => (
-    <Route key={path} path={path} element={<Component />} />
-  ));
+  const NotFound = routes.find(({ path }) => path === '/notFound').element;
 
-  const NotFound = routes.find(({ path }) => path === "/notFound").component;
+  routes.push({path: '*', element: NotFound, errorElement: <ErrorBoundary />});
 
-  return (
-    <ReactRouterRoutes>
-      {routeComponents}
-      <Route path="*" element={<NotFound />} />
-    </ReactRouterRoutes>
-  );
+  const router = createBrowserRouter([{
+    element: <AppBridgeProvider />,
+    children: routes
+  }]);
+
+  return <RouterProvider router={router} />;
 }
 
 function useRoutes(pages) {
   const routes = Object.keys(pages)
     .map((key) => {
       let path = key
-        .replace("./pages", "")
+        .replace("../../pages", "")
         .replace(/\.(t|j)sx?$/, "")
         /**
          * Replace /index with /
@@ -58,12 +60,15 @@ function useRoutes(pages) {
         console.warn(`${key} doesn't export a default React component`);
       }
 
+      const Component = pages[key].default;
+
       return {
         path,
-        component: pages[key].default,
+        element: <Component />,
+        errorElement: <ErrorBoundary />
       };
     })
-    .filter((route) => route.component);
+    .filter((route) => route.element);
 
   return routes;
 }
