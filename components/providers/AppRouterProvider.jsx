@@ -15,7 +15,7 @@ import ErrorBoundary from "../../components/ErrorBoundary";
  * @return {RouterProvider} `<RouterProvider/>` from React Router, with a `<Route/>` for each file in `pages`
  */
 
-export function AppRouterProvider () {
+export function AppRouterProvider() {
   // Any .tsx or .jsx files in /pages will become a route
   // See https://vitejs.dev/guide/features.html#glob-import
   const pages = import.meta.globEager('../../pages/**/!(*.test.[jt]sx)*.([jt]sx)');
