@@ -12,15 +12,17 @@ export default function ErrorBoundary() {
 
   console.error(error);
 
-  return <Page narrowWidth>
-    <Layout>
-      <Layout.Section>
-        <div style={{ marginTop: "100px" }}>
-          <Banner title="Oh No!" status="critical">
-            <p>We encountered an error</p>
-          </Banner>
-        </div>
-      </Layout.Section>
-    </Layout>
-  </Page>
+  return (
+    <Page narrowWidth>
+      <Layout>
+        <Layout.Section>
+          <div style={{ marginTop: "100px" }}>
+            <Banner title="Oh No!" status="critical">
+              <p>We encountered an error</p>
+            </Banner>
+          </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
 }
