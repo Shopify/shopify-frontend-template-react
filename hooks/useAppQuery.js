@@ -20,7 +20,7 @@ export const useAppQuery = ({ url, fetchInit = {}, reactQueryOptions }) => {
     return async () => {
       const response = await authenticatedFetch(url, fetchInit);
       if (!response.ok) {
-        return Promise.reject(`Error: ${response.status} ${response.statusText}`)
+        return Promise.reject(`Error: ${response.status}`)
       }
       return response.json();
     };
