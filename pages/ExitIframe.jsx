@@ -13,11 +13,18 @@ export default function ExitIframe() {
       const redirectUri = params.get("redirectUri");
       const url = new URL(decodeURIComponent(redirectUri));
 
-      if (url.hostname === location.hostname) {
+      if (
+        [location.hostname, "admin.shopify.com"].includes(url.hostname) ||
+        url.hostname.endsWith(".myshopify.com")
+      ) {
         const redirect = Redirect.create(app);
         redirect.dispatch(
           Redirect.Action.REMOTE,
           decodeURIComponent(redirectUri)
+        );
+      } else {
+        console.warn(
+          "/exitiframe redirect target is not in the app or a Shopify domain, refusing to redirect"
         );
       }
     }
