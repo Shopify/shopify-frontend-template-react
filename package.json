@@ -1,5 +1,6 @@
 {
   "name": "shopify-frontend-template-react",
+  "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
