@@ -1,11 +1,13 @@
 import { Redirect } from "@shopify/app-bridge/actions";
 import { useAppBridge, Loading } from "@shopify/app-bridge-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Banner, Layout, Page } from "@shopify/polaris";
 
 export default function ExitIframe() {
   const app = useAppBridge();
   const { search } = useLocation();
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     if (!!app && !!search) {
@@ -23,12 +25,24 @@ export default function ExitIframe() {
           decodeURIComponent(redirectUri)
         );
       } else {
-        console.warn(
-          "/exitiframe redirect target is not in the app or a Shopify domain, refusing to redirect"
-        );
+        setShowWarning(true);
       }
     }
-  }, [app, search]);
+  }, [app, search, setShowWarning]);
 
-  return <Loading />;
+  return showWarning ? (
+    <Page narrowWidth>
+      <Layout>
+        <Layout.Section>
+          <div style={{ marginTop: "100px" }}>
+            <Banner title="Redirecting outside of Shopify" status="warning">
+              App attempted to redirect to a URL outside of Shopify.
+            </Banner>
+          </div>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  ) : (
+    <Loading />
+  );
 }
