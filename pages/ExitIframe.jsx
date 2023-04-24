@@ -36,7 +36,7 @@ export default function ExitIframe() {
         <Layout.Section>
           <div style={{ marginTop: "100px" }}>
             <Banner title="Redirecting outside of Shopify" status="warning">
-              App attempted to redirect to a URL outside of Shopify.
+              Apps can only use /exitiframe to reach Shopify or the app itself.
             </Banner>
           </div>
         </Layout.Section>
