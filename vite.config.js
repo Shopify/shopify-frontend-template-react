@@ -4,13 +4,17 @@ import { fileURLToPath } from "url";
 import https from "https";
 import react from "@vitejs/plugin-react";
 
+const SHOPIFY_APP_API_KEY =
+  process.env.SHOPIFY_APP_API_KEY || process.env.SHOPIFY_API_KEY;
+const SHOPIFY_APP_URL = process.env.SHOPIFY_APP_URL || process.env.HOST;
+
 if (
   process.env.npm_lifecycle_event === "build" &&
   !process.env.CI &&
-  !process.env.SHOPIFY_API_KEY
+  !SHOPIFY_APP_API_KEY
 ) {
   console.warn(
-    "\nBuilding the frontend app without an API key. The frontend build will not run without an API key. Set the SHOPIFY_API_KEY environment variable when running the build command.\n"
+    "\nBuilding the frontend app without an API key. The frontend build will not run without an API key. Set the SHOPIFY_APP_API_KEY environment variable when running the build command.\n"
   );
 }
 
@@ -21,8 +25,8 @@ const proxyOptions = {
   ws: false,
 };
 
-const host = process.env.HOST
-  ? process.env.HOST.replace(/https?:\/\//, "")
+const host = SHOPIFY_APP_URL
+  ? SHOPIFY_APP_URL.replace(/https?:\/\//, "")
   : "localhost";
 
 let hmrConfig;
@@ -46,7 +50,7 @@ export default defineConfig({
   root: dirname(fileURLToPath(import.meta.url)),
   plugins: [react()],
   define: {
-    "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
+    "process.env.SHOPIFY_APP_API_KEY": JSON.stringify(SHOPIFY_APP_API_KEY),
   },
   resolve: {
     preserveSymlinks: true,
