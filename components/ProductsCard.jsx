@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, TextContainer, Text } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
+import { useTranslation } from "react-i18next";
 import { useAppQuery, useAuthenticatedFetch } from "../hooks";
 
 export function ProductsCard() {
@@ -8,6 +9,8 @@ export function ProductsCard() {
   const [isLoading, setIsLoading] = useState(true);
   const [toastProps, setToastProps] = useState(emptyToastProps);
   const fetch = useAuthenticatedFetch();
+  const { t } = useTranslation();
+  const productsCount = 5;
 
   const {
     data,
@@ -33,11 +36,15 @@ export function ProductsCard() {
 
     if (response.ok) {
       await refetchProductCount();
-      setToastProps({ content: "5 products created!" });
+      setToastProps({
+        content: t("ProductsCard.productsCreatedToast", {
+          count: productsCount,
+        }),
+      });
     } else {
       setIsLoading(false);
       setToastProps({
-        content: "There was an error creating products",
+        content: t("ProductsCard.errorCreatingProductsToast"),
         error: true,
       });
     }
@@ -47,21 +54,20 @@ export function ProductsCard() {
     <>
       {toastMarkup}
       <Card
-        title="Product Counter"
+        title={t("ProductsCard.title")}
         sectioned
         primaryFooterAction={{
-          content: "Populate 5 products",
+          content: t("ProductsCard.populateProductsButton", {
+            count: productsCount,
+          }),
           onAction: handlePopulate,
           loading: isLoading,
         }}
       >
         <TextContainer spacing="loose">
-          <p>
-            Sample products are created with a default title and price. You can
-            remove them at any time.
-          </p>
+          <p>{t("ProductsCard.description")}</p>
           <Text as="h4" variant="headingMd">
-            TOTAL PRODUCTS
+            {t("ProductsCard.totalProductsHeading")}
             <Text variant="bodyMd" as="p" fontWeight="semibold">
               {isLoadingCount ? "-" : data.count}
             </Text>
