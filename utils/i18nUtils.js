@@ -28,7 +28,7 @@ const DEFAULT_APP_LOCALE = "en";
  *   en.default.json
  *   de.json
  *   fr.json
- * @see Available languages in the Shopify Help Center:
+ * @see Available Shopify Admin languages in the Shopify Help Center:
  * https://help.shopify.com/en/manual/your-account/languages#available-languages
  */
 const SUPPORTED_APP_LOCALES = ["en", "de", "fr"];
@@ -101,14 +101,38 @@ async function loadIntlPolyfills() {
   await Promise.all(promises);
 }
 
-async function loadIntlPluralRulesLocaleData(locale) {
-  return (
-    await import(
-      `../node_modules/@formatjs/intl-pluralrules/locale-data/${locale}.js`
-    )
-  ).default;
-}
+/**
+ * A subset of the available plural rules locales
+ *  that match available Shopify Admin languages
+ * @see Available Shopify Admin languages in the Shopify Help Center:
+ * https://help.shopify.com/en/manual/your-account/languages#available-languages
+ */
+const PLURAL_RULES_LOCALE_DATA = {
+  cs: () => import("@formatjs/intl-pluralrules/locale-data/cs"),
+  da: () => import("@formatjs/intl-pluralrules/locale-data/da"),
+  de: () => import("@formatjs/intl-pluralrules/locale-data/de"),
+  en: () => import("@formatjs/intl-pluralrules/locale-data/en"),
+  es: () => import("@formatjs/intl-pluralrules/locale-data/es"),
+  fi: () => import("@formatjs/intl-pluralrules/locale-data/fi"),
+  fr: () => import("@formatjs/intl-pluralrules/locale-data/fr"),
+  it: () => import("@formatjs/intl-pluralrules/locale-data/it"),
+  ja: () => import("@formatjs/intl-pluralrules/locale-data/ja"),
+  ko: () => import("@formatjs/intl-pluralrules/locale-data/ko"),
+  nb: () => import("@formatjs/intl-pluralrules/locale-data/nb"),
+  nl: () => import("@formatjs/intl-pluralrules/locale-data/nl"),
+  pl: () => import("@formatjs/intl-pluralrules/locale-data/pl"),
+  pt: () => import("@formatjs/intl-pluralrules/locale-data/pt"),
+  "pt-PT": () => import("@formatjs/intl-pluralrules/locale-data/pt-PT"),
+  sv: () => import("@formatjs/intl-pluralrules/locale-data/sv"),
+  th: () => import("@formatjs/intl-pluralrules/locale-data/th"),
+  tr: () => import("@formatjs/intl-pluralrules/locale-data/tr"),
+  vi: () => import("@formatjs/intl-pluralrules/locale-data/vi"),
+  zh: () => import("@formatjs/intl-pluralrules/locale-data/zh"),
+};
 
+async function loadIntlPluralRulesLocaleData(locale) {
+  return (await PLURAL_RULES_LOCALE_DATA[locale]()).default;
+}
 /**
  * @private
  * @async
@@ -177,8 +201,36 @@ async function fetchPolarisTranslations() {
   return _polarisTranslations;
 }
 
+/**
+ * Polaris imports are declared explicitly because
+ * dynamic imports with variables are only supported
+ * for files with relative paths, not packages.
+ * @see https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+ */
+const POLARIS_LOCALE_DATA = {
+  cs: () => import("@shopify/polaris/locales/cs.json"),
+  da: () => import("@shopify/polaris/locales/da.json"),
+  de: () => import("@shopify/polaris/locales/de.json"),
+  en: () => import("@shopify/polaris/locales/en.json"),
+  es: () => import("@shopify/polaris/locales/es.json"),
+  fi: () => import("@shopify/polaris/locales/fi.json"),
+  fr: () => import("@shopify/polaris/locales/fr.json"),
+  it: () => import("@shopify/polaris/locales/it.json"),
+  ja: () => import("@shopify/polaris/locales/ja.json"),
+  ko: () => import("@shopify/polaris/locales/ko.json"),
+  nb: () => import("@shopify/polaris/locales/nb.json"),
+  nl: () => import("@shopify/polaris/locales/nl.json"),
+  pl: () => import("@shopify/polaris/locales/pl.json"),
+  "pt-BR": () => import("@shopify/polaris/locales/pt-BR.json"),
+  "pt-PT": () => import("@shopify/polaris/locales/pt-PT.json"),
+  sv: () => import("@shopify/polaris/locales/sv.json"),
+  th: () => import("@shopify/polaris/locales/th.json"),
+  tr: () => import("@shopify/polaris/locales/tr.json"),
+  vi: () => import("@shopify/polaris/locales/vi.json"),
+  "zh-CN": () => import("@shopify/polaris/locales/zh-CN.json"),
+  "zh-TW": () => import("@shopify/polaris/locales/zh-TW.json"),
+};
+
 async function loadPolarisTranslations(locale) {
-  return (
-    await import(`../node_modules/@shopify/polaris/locales/${locale}.json`)
-  ).default;
+  return (await POLARIS_LOCALE_DATA[locale]()).default;
 }
