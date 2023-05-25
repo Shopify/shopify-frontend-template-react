@@ -21,7 +21,7 @@
     "@formatjs/intl-pluralrules": "^5.2.2",
     "@shopify/app-bridge": "^3.7.7",
     "@shopify/app-bridge-react": "^3.7.7",
-    "@shopify/i18next-shopify": "0.1.1",
+    "@shopify/i18next-shopify": "0.2.0",
     "@shopify/polaris": "^10.49.1",
     "@vitejs/plugin-react": "1.2.0",
     "i18next": "^22.4.11",
