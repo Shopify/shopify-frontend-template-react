@@ -5,7 +5,7 @@ async_pr_mode: per_pr
 components:
   - name: merchant
     audience: merchant
-    scheme: apps-and-themes
+    scheme: react
     owners: ["@Shopify/client-libraries-app-templates"]
     paths:
       - locales/**/{{language}}.json

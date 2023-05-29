@@ -12,10 +12,6 @@ import {
 
 /**
  * The default locale for the app.
- *
- * This should correspond with the JSON file in the `locales` folder with the naming convention `{locale}.default.json`.
- * @example
- *   en.default.json
  */
 const DEFAULT_APP_LOCALE = "en";
 
@@ -25,7 +21,7 @@ const DEFAULT_APP_LOCALE = "en";
  * These should correspond with the JSON files in the `locales` folder.
  *
  * @example
- *   en.default.json
+ *   en.json
  *   de.json
  *   fr.json
  * @see Available Shopify Admin languages in the Shopify Help Center:
@@ -164,12 +160,7 @@ async function initI18next() {
 
 function localResourcesToBackend() {
   return resourcesToBackend(async (locale, _namespace) => {
-    const fallbackLng = Array.isArray(i18next.options.fallbackLng)
-      ? i18next.options.fallbackLng[0]
-      : i18next.options.fallbackLng;
-    const defaultIndicator = locale === fallbackLng ? ".default" : "";
-    return (await import(`../locales/${locale}${defaultIndicator}.json`))
-      .default;
+    return (await import(`../locales/${locale}.json`)).default;
   });
 }
 
