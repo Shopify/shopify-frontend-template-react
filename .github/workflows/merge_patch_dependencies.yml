@@ -14,19 +14,9 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Approve and merge Dependabot PRs for patch versions
         if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch'}}
-        uses: actions/github-script@v5
-        with:
-          script: |
-            await github.rest.pulls.createReview({
-              pull_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              event: 'APPROVE',
-            })
-
-            await github.rest.pulls.merge({
-              merge_method: "merge",
-              owner: repository.owner,
-              pull_number: pullRequest.number,
-              repo: repository.repo,
-            })
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
