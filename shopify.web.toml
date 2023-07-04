@@ -1,4 +1,4 @@
-type="frontend"
+roles = ["frontend"]
 
 [commands]
 dev = "npm run dev"
