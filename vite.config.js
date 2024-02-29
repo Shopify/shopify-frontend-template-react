@@ -48,6 +48,23 @@ export default defineConfig({
   define: {
     "process.env.SHOPIFY_API_KEY": JSON.stringify(process.env.SHOPIFY_API_KEY),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          if (id.includes('/src/')) {
+            return id.split('/src/')[1].split('/')[0];
+          }
+          return 'misc';
+        },
+        chunkFileNames: "[name]-[hash].js",
+      }
+    },
+    chunkSizeWarningLimit: 500, // This is for warning, not for splitting
+  },
   resolve: {
     preserveSymlinks: true,
   },
