@@ -180,13 +180,13 @@ async function fetchPolarisTranslations() {
   const defaultPolarisLocale = match(
     [DEFAULT_APP_LOCALE],
     SUPPORTED_POLARIS_LOCALES,
-    DEFAULT_POLARIS_LOCALE
+    DEFAULT_POLARIS_LOCALE,
   );
   // Get the closest matching user locale supported by Polaris
   const polarisLocale = match(
     [getUserLocale()],
     SUPPORTED_POLARIS_LOCALES,
-    defaultPolarisLocale
+    defaultPolarisLocale,
   );
   _polarisTranslations = await loadPolarisTranslations(polarisLocale);
   return _polarisTranslations;
