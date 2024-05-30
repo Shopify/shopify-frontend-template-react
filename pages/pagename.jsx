@@ -6,19 +6,14 @@ export default function PageName() {
   const { t } = useTranslation();
   return (
     <Page>
-      <TitleBar
-        title={t("PageName.title")}
-        primaryAction={{
-          content: t("PageName.primaryAction"),
-          onAction: () => console.log("Primary action"),
-        }}
-        secondaryActions={[
-          {
-            content: t("PageName.secondaryAction"),
-            onAction: () => console.log("Secondary action"),
-          },
-        ]}
-      />
+      <TitleBar title={t("PageName.title")}>
+        <button variant="primary" onClick={() => console.log("Primary action")}>
+          {t("PageName.primaryAction")}
+        </button>
+        <button onClick={() => console.log("Secondary action")}>
+          {t("PageName.secondaryAction")}
+        </button>
+      </TitleBar>
       <Layout>
         <Layout.Section>
           <Card sectioned>
