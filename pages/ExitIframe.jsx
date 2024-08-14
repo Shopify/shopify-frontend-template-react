@@ -20,7 +20,7 @@ export default function ExitIframe() {
         [location.hostname, "admin.shopify.com"].includes(url.hostname) ||
         url.hostname.endsWith(".myshopify.com")
       ) {
-        window.open(decodeURIComponent(redirectUri), "_top");
+        window.open(url, "_top");
       } else {
         setShowWarning(true);
       }
