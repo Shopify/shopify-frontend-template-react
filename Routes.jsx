@@ -10,7 +10,7 @@ import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
  * * `/pages/blog/[id].jsx` matches `/blog/123`
  * * `/pages/[...catchAll].jsx` matches any URL not explicitly matched
  *
- * @param {object} pages value of import.meta.globEager(). See https://vitejs.dev/guide/features.html#glob-import
+ * @param {object} pages value of import.meta.glob(). See https://vitejs.dev/guide/features.html#glob-import
  *
  * @return {Routes} `<Routes/>` from React Router, with a `<Route/>` for each file in `pages`
  */
