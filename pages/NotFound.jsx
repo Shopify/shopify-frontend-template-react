@@ -7,11 +7,9 @@ export default function NotFound() {
   return (
     <Page>
       <Card>
-        <Card.Section>
-          <EmptyState heading={t("NotFound.heading")} image={notFoundImage}>
-            <p>{t("NotFound.description")}</p>
-          </EmptyState>
-        </Card.Section>
+        <EmptyState heading={t("NotFound.heading")} image={notFoundImage}>
+          <p>{t("NotFound.description")}</p>
+        </EmptyState>
       </Card>
     </Page>
   );

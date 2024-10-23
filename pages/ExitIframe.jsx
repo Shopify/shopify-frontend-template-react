@@ -20,7 +20,7 @@ export default function ExitIframe() {
         [location.hostname, "admin.shopify.com"].includes(url.hostname) ||
         url.hostname.endsWith(".myshopify.com")
       ) {
-        window.open(url, "_top");
+        window.open(redirectUri, "_top");
       } else {
         setShowWarning(true);
       }
@@ -32,7 +32,7 @@ export default function ExitIframe() {
       <Layout>
         <Layout.Section>
           <div style={{ marginTop: "100px" }}>
-            <Banner title="Redirecting outside of Shopify" status="warning">
+            <Banner title="Redirecting outside of Shopify" tone="warning">
               Apps can only use /exitiframe to reach Shopify or the app itself.
             </Banner>
           </div>
