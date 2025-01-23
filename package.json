@@ -23,7 +23,7 @@
     "@shopify/app-bridge-react": "^4.1.3",
     "@shopify/i18next-shopify": "^0.2.9",
     "@shopify/polaris": "^10.49.1",
-    "@vitejs/plugin-react": "4.2.1",
+    "@vitejs/plugin-react": "4.3.4",
     "i18next": "^23.1.0",
     "i18next-resources-to-backend": "^1.1.4",
     "react": "^18.2.0",
