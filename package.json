@@ -16,7 +16,7 @@
     "extends": "@shopify/stylelint-polaris"
   },
   "dependencies": {
-    "@formatjs/intl-locale": "^3.3.2",
+    "@formatjs/intl-locale": "^4.2.9",
     "@formatjs/intl-localematcher": "^0.5.4",
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@shopify/app-bridge": "^3.7.7",
